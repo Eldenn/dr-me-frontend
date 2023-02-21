@@ -1,0 +1,42 @@
+{
+  "common": {
+    "name": "Dr. Me",
+    "description": "An SSO to connect to your applications",
+    "watermark": "by Dr. Code",
+    "errors": {
+      "404": {
+        "title": "No page found",
+        "message": "The page you are looking for does not exist.",
+        "button": "Back to home page"
+      },
+      "network": "Network error: Unable to connect to the server.",
+      "endpoint_not_found": "Server error: the requested URL does not exist.",
+      "too_many_requests": "Server error: too many requests.",
+      "file_not_found": "Server error: File does not exist or has expired",
+      "invalid_signature": "Server error: invalid signature",
+      "file_cannot_be_saved": "Server error: unable to save file",
+      "invalid_time_value": "Application error: invalid environment",
+      "https": "Application error: HTTPS connection required or invalid key",
+      "expired_signature": "Application error: signature expired",
+      "missing_headers": "Application error: missing headers",
+      "jwk_export": "Application error: Unable to export public key",
+      "cannot_decrypt": "Application error: unable to decrypt the file, the key may be invalid or the context is not secure (HTTPS)"
+    }
+  },
+  "home": {
+    "title": "Un SSO Made by Dr. Code",
+    "success": {
+      "login": "You are connected !"
+    }
+  },
+  "form": {
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Login",
+    "forgot": "Forgot your password?",
+    "register": "Create an account",
+    "remember": "Remember me",
+    "signin": "Sign in"
+  }
+}

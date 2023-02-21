@@ -1,0 +1,89 @@
+{
+  "extends": [
+    "airbnb-typescript",
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "globals": {
+    "React": "writable",
+    "FormData": "readonly",
+    "FileReader": "readonly"
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "max-len": [
+      "error",
+      {
+        "code": 130
+      }
+    ],
+    "indent": ["error", 2],
+    "no-console": [
+      "warn",
+      {
+        "allow": ["error", "info", "warn"]
+      }
+    ],
+    "no-underscore-dangle": "off",
+    "no-shadow": "off",
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectPattern": {
+          "multiline": true,
+          "minProperties": 5
+        }
+      }
+    ],
+    "react/jsx-curly-brace-presence": [
+      "warn",
+      {
+        "props": "always"
+      }
+    ],
+    "lines-between-class-members": "off",
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "jsx-a11y/alt-text": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "react/react-in-jsx-scope": "off",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/extensions": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      // @xxx load tsconfig.json to eslint...
+      // thx https://github.com/benmosher/eslint-plugin-import/issues/1485#issuecomment-535351922 🙏
+      "typescript": {}
+    },
+    "react": {
+      "version": "detect"
+    }
+  }
+}
