@@ -15,7 +15,7 @@ import {
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const LoginForm: FC = () => {
+const Home: FC = () => {
   const { t } = useTranslation();
 
   return (
@@ -63,4 +63,4 @@ const LoginForm: FC = () => {
   );
 };
 
-export default LoginForm;
+export default Home;
