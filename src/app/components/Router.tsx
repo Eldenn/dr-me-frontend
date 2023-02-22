@@ -5,6 +5,7 @@ import ROUTES from '@/app/constants/navigation';
 
 const Home = lazy(() => import('@/app/pages/Home'));
 const ForgottenPassword = lazy(() => import('@/app/pages/ForgottenPassword'));
+const Account = lazy(() => import('@/app/pages/Account'));
 
 function Router(): JSX.Element {
   return (
@@ -14,6 +15,8 @@ function Router(): JSX.Element {
           <Routes>
             <Route path={ROUTES.HOME.path} element={<Home />} />
             <Route path={ROUTES.FORGOTTEN_PASSWORD.path} element={<ForgottenPassword />} />
+            <Route path={ROUTES.ACCOUNT.path} element={<Account />} />
+            <Route path={'*'} element={<Home />} />
           </Routes>
         </Suspense>
       </div>

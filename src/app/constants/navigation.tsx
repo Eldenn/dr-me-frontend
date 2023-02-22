@@ -7,6 +7,9 @@ const ROUTES: IRoutes = {
   FORGOTTEN_PASSWORD: {
     path: '/forgot-password',
   },
+  ACCOUNT : {
+    path: '/account',
+  },
 };
 
 export default ROUTES;
