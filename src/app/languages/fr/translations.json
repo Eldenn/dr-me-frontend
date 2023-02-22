@@ -29,6 +29,15 @@
       "login": "Vous êtes connecté !"
     }
   },
+  "forgot": {
+    "title": "Mot de passe oublié ?",
+    "subtitle": "Entrez votre adresse email pour réinitialiser votre mot de passe.",
+    "send": "Envoyer",
+    "success": {
+      "reset": "Un email vous a été envoyé pour réinitialiser votre mot de passe."
+    },
+    "back": "Retour à la page de connexion"
+  },
   "form": {
     "login": "Connexion",
     "email": "Email",

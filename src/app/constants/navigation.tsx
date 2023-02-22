@@ -1,11 +1,12 @@
-import { IRoutes } from "@/app/types/navigation";
-import Home from "@/app/pages/Home";
+import { IRoutes } from '@/app/types/navigation';
 
-const routes: IRoutes = {
-  home: {
+const ROUTES: IRoutes = {
+  HOME: {
     path: '/',
-    component: Home,
+  },
+  FORGOTTEN_PASSWORD: {
+    path: '/forgot-password',
   },
 };
 
-export default routes;
+export default ROUTES;

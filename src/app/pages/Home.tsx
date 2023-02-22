@@ -13,7 +13,9 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import React, { FC } from 'react';
+import { Link as ReachLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import ROUTES from '@/app/constants/navigation';
 
 const Home: FC = () => {
   const { t } = useTranslation();
@@ -45,7 +47,9 @@ const Home: FC = () => {
             <Stack spacing={10}>
               <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
                 <Checkbox>{t('form.remember')}</Checkbox>
-                <Link color={'blue.400'}>{t('form.forgot')}</Link>
+                <Link as={ReachLink} to={ROUTES.FORGOTTEN_PASSWORD.path} color={'blue.400'}>
+                  {t('form.forgot')}
+                </Link>
               </Stack>
               <Button
                 bg={'blue.400'}
