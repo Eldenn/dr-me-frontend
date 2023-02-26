@@ -47,5 +47,28 @@
     "register": "Create an account",
     "remember": "Remember me",
     "signin": "Sign in"
+  },
+  "profile": {
+    "title": "My profile",
+    "success": {
+      "update": "Your information has been updated."
+    },
+    "form": {
+      "firstname": "First name",
+      "lastname": "Last name",
+      "email": "Email",
+      "address": "Address",
+      "city": "City",
+      "zip": "Zip code",
+      "country": "Country",
+      "phone": "Phone",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Update"
+    },
+    "roles": {
+      "admin": "Admin",
+      "user": "User"
+    }
   }
 }

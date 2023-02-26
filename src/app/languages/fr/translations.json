@@ -47,5 +47,28 @@
     "register": "Créer un compte",
     "remember": "Se souvenir de moi",
     "signin": "Se connecter"
+  },
+  "profile": {
+    "title": "Mon profil",
+    "success": {
+      "update": "Vos informations ont été mises à jour."
+    },
+    "form": {
+      "firstname": "Prénom",
+      "lastname": "Nom",
+      "email": "Email",
+      "address": "Adresse",
+      "city": "Ville",
+      "zip": "Code postal",
+      "country": "Pays",
+      "phone": "Téléphone",
+      "password": "Mot de passe",
+      "password_confirm": "Confirmation du mot de passe",
+      "submit": "Mettre à jour"
+    },
+    "roles": {
+      "admin": "Admin",
+      "user": "Utilisateur"
+    }
   }
 }

@@ -7,9 +7,7 @@ interface ILayoutProps {
 
 const Layout: FC<ILayoutProps> = ({ children }: ILayoutProps) => (
   <Flex w={'100%'} minH={'100vh'} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
-    <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-      {children}
-    </Stack>
+    {children}
   </Flex>
 );
 

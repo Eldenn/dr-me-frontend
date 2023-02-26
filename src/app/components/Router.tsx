@@ -10,16 +10,14 @@ const Account = lazy(() => import('@/app/pages/Account'));
 function Router(): JSX.Element {
   return (
     <BrowserRouter>
-      <div className={'app'}>
-        <Suspense fallback={<Progress size={'lg'} isIndeterminate />}>
-          <Routes>
-            <Route path={ROUTES.HOME.path} element={<Home />} />
-            <Route path={ROUTES.FORGOTTEN_PASSWORD.path} element={<ForgottenPassword />} />
-            <Route path={ROUTES.ACCOUNT.path} element={<Account />} />
-            <Route path={'*'} element={<Home />} />
-          </Routes>
-        </Suspense>
-      </div>
+      <Suspense fallback={<Progress size={'lg'} isIndeterminate />}>
+        <Routes>
+          <Route path={ROUTES.HOME.path} element={<Home />} />
+          <Route path={ROUTES.FORGOTTEN_PASSWORD.path} element={<ForgottenPassword />} />
+          <Route path={ROUTES.ACCOUNT.path} element={<Account />} />
+          <Route path={'*'} element={<Home />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
