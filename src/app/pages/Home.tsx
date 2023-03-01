@@ -1,3 +1,4 @@
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import {
   Box,
   FormControl,
@@ -11,48 +12,71 @@ import {
   Text,
   useColorModeValue,
   Center,
+  FormErrorMessage,
+  useToast,
+  UseToastOptions,
 } from '@chakra-ui/react';
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 // import { Link as ReachLink, useParams } from 'react-router-dom';
 import { Link as ReachLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ROUTES from '@/app/constants/navigation';
 import { useSignUpMutation } from '@/app/generated/graphql';
+import { TOAST_DURATION, TOAST_STATUS } from '@/app/constants/toast';
+
+interface IFieldsForm {
+  email: string;
+  password: string;
+}
 
 const Home: FC = () => {
+  const { handleSubmit, register } = useForm<IFieldsForm>();
+  const toast = useToast();
   // const navigate = useNavigate();
   const { t } = useTranslation();
   // const { fromDomain } = useParams();
 
-  const [signUp, { data }] = useSignUpMutation();
+  const [signUp, { data, error, loading }] = useSignUpMutation();
 
-  console.log('data', data);
+  const handleLogin: SubmitHandler<IFieldsForm> = useCallback(
+    ({ email, password }) => {
+      signUp({
+        variables: {
+          input: {
+            identifier: email,
+            password,
+          },
+        },
+      });
+      //navigate(ROUTES.ACCOUNT.path);
+      //window.open('http://127.0.0.1:8080/', '', 'width=800,height=600');
 
-  const handleLogin = useCallback(() => {
-    signUp({
-      variables: {
-        input: {
-          identifier: "dr-code",
-          password: "M;LNdCkn38(ch.j.98E5%910bD=lmPB(Of)#Ssv\\,}}>mG]*8f?\\ZV+4*Im-"
-        }
-      },
-    });
-    //navigate(ROUTES.ACCOUNT.path);
-    //window.open('http://127.0.0.1:8080/', '', 'width=800,height=600');
+      // if (window.opener) {
+      //   window.opener.postMessage(
+      //     {
+      //       type: 'login',
+      //       data: 'login',
+      //     },
+      //     `http://127.0.0.1:8080`,
+      //   );
+      //   window.close();
+      // } else {
+      //   window.open(`http://127.0.0.1:8080/test`, '', 'width=800,height=600');
+      // }
+    },
+    [signUp],
+  );
 
-    // if (window.opener) {
-    //   window.opener.postMessage(
-    //     {
-    //       type: 'login',
-    //       data: 'login',
-    //     },
-    //     `http://127.0.0.1:8080`,
-    //   );
-    //   window.close();
-    // } else {
-    //   window.open(`http://127.0.0.1:8080/test`, '', 'width=800,height=600');
-    // }
-  }, [signUp]);
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: t(`error.${error.graphQLErrors[0].extensions.code}`),
+        status: TOAST_STATUS.ERROR,
+        duration: TOAST_DURATION,
+        isClosable: true,
+      });
+    }
+  }, [data, error, t, toast]);
 
   // add event listener to receive a message from the popup
   // useEffect(() => {
@@ -84,35 +108,50 @@ const Home: FC = () => {
         </Text>
       </Stack>
       <Center>
-        <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8} mt={5} width={'md'}>
-          <Stack spacing={4}>
-            <FormControl id={'email'}>
-              <FormLabel>{t('form.email')}</FormLabel>
-              <Input type={'email'} />
-            </FormControl>
-            <FormControl id={'password'}>
-              <FormLabel>{t('form.password')}</FormLabel>
-              <Input type={'password'} />
-            </FormControl>
-            <Stack spacing={10}>
-              <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
-                <Checkbox>{t('form.remember')}</Checkbox>
-                <Link as={ReachLink} to={ROUTES.FORGOTTEN_PASSWORD.path} color={'blue.400'}>
-                  {t('form.forgot')}
-                </Link>
+        <form onSubmit={handleSubmit(handleLogin)}>
+          <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8} mt={5} width={'md'}>
+            <Stack spacing={4}>
+              <FormControl id={'email'}>
+                <FormLabel>{t('form.email')}</FormLabel>
+                <Input
+                  id={'email'}
+                  type={'email'}
+                  {...register('email', {
+                    required: 'This is required',
+                  })}
+                />
+              </FormControl>
+              <FormControl id={'password'}>
+                <FormLabel>{t('form.password')}</FormLabel>
+                <Input
+                  id={'password'}
+                  type={'password'}
+                  {...register('password', {
+                    required: 'This is required',
+                  })}
+                />
+              </FormControl>
+              <Stack spacing={10}>
+                <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
+                  <Checkbox>{t('form.remember')}</Checkbox>
+                  <Link as={ReachLink} to={ROUTES.FORGOTTEN_PASSWORD.path} color={'blue.400'}>
+                    {t('form.forgot')}
+                  </Link>
+                </Stack>
+                <Button
+                  type={'submit'}
+                  isLoading={loading}
+                  bg={'blue.400'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'blue.500',
+                  }}>
+                  {t('form.signin')}
+                </Button>
               </Stack>
-              <Button
-                onClick={handleLogin}
-                bg={'blue.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}>
-                {t('form.signin')}
-              </Button>
             </Stack>
-          </Stack>
-        </Box>
+          </Box>
+        </form>
       </Center>
     </div>
   );

@@ -70,5 +70,8 @@
       "admin": "Admin",
       "user": "Utilisateur"
     }
+  },
+  "error": {
+    "BAD_USER_INPUT": "Email ou mot de passe incorrect."
   }
 }
