@@ -1,19 +1,25 @@
-import dotenv from 'dotenv';
-import { generate, CodegenContext } from '@graphql-codegen/cli';
-import axios from 'axios';
+const { generate, CodegenContext } = require('@graphql-codegen/cli');
+const axios = require('axios');
 
-const { STRAPI_HOST, STRAPI_PORT, STRAPI_ADMIN_PATH, STRAPI_ADMIN_USER, STRAPI_ADMIN_PASSWORD } = process.env;
-
-dotenv.config();
+require('dotenv').config();
 
 async function schemagen() {
   try {
-    const host = `${STRAPI_HOST}:${STRAPI_PORT}`;
+    const {
+      REACT_APP_STRAPI_HOST,
+      REACT_APP_STRAPI_PORT,
+      REACT_APP_STRAPI_ADMIN_PATH,
+      REACT_APP_STRAPI_ADMIN_USER,
+      REACT_APP_STRAPI_ADMIN_PASSWORD,
+    } = process.env;
+
+    console.log('Generating schema.graphql...');
+    const host = `${REACT_APP_STRAPI_HOST}:${REACT_APP_STRAPI_PORT}`;
 
     //fetch token with axios
-    const token = await axios.post(`${host}${STRAPI_ADMIN_PATH}`, {
-      email: STRAPI_ADMIN_USER,
-      password: STRAPI_ADMIN_PASSWORD,
+    const token = await axios.post(`${host}${REACT_APP_STRAPI_ADMIN_PATH}`, {
+      email: REACT_APP_STRAPI_ADMIN_USER,
+      password: REACT_APP_STRAPI_ADMIN_PASSWORD,
     });
 
     const config = {

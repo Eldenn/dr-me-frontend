@@ -1,8 +1,11 @@
+import dotenv from 'dotenv';
 import { defineConfig, PluginOption } from 'vite';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { ViteMinifyPlugin } from 'vite-plugin-minify';
 import { resolve } from 'path';
+
+dotenv.config();
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,4 +21,7 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
+  define: {
+    'process.env': process.env,
+  }
 });

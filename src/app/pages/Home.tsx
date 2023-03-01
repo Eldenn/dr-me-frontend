@@ -12,51 +12,63 @@ import {
   useColorModeValue,
   Center,
 } from '@chakra-ui/react';
-import React, { FC, useCallback, useEffect } from 'react';
-import { Link as ReachLink, useNavigate, useParams } from 'react-router-dom';
+import React, { FC, useCallback } from 'react';
+// import { Link as ReachLink, useParams } from 'react-router-dom';
+import { Link as ReachLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ROUTES from '@/app/constants/navigation';
+import { useSignUpMutation } from '@/app/generated/graphql';
 
 const Home: FC = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { t } = useTranslation();
-  const { fromDomain } = useParams();
+  // const { fromDomain } = useParams();
 
-  console.log('fromDomain', fromDomain);
+  const [signUp, { data }] = useSignUpMutation();
+
+  console.log('data', data);
 
   const handleLogin = useCallback(() => {
+    signUp({
+      variables: {
+        input: {
+          identifier: "dr-code",
+          password: "M;LNdCkn38(ch.j.98E5%910bD=lmPB(Of)#Ssv\\,}}>mG]*8f?\\ZV+4*Im-"
+        }
+      },
+    });
     //navigate(ROUTES.ACCOUNT.path);
     //window.open('http://127.0.0.1:8080/', '', 'width=800,height=600');
 
-    if (window.opener) {
-      window.opener.postMessage(
-        {
-          type: 'login',
-          data: 'login',
-        },
-        `http://127.0.0.1:8080`,
-      );
-      window.close();
-    } else {
-      window.open(`http://127.0.0.1:8080/test`, '', 'width=800,height=600');
-    }
-  }, []);
+    // if (window.opener) {
+    //   window.opener.postMessage(
+    //     {
+    //       type: 'login',
+    //       data: 'login',
+    //     },
+    //     `http://127.0.0.1:8080`,
+    //   );
+    //   window.close();
+    // } else {
+    //   window.open(`http://127.0.0.1:8080/test`, '', 'width=800,height=600');
+    // }
+  }, [signUp]);
 
   // add event listener to receive a message from the popup
-  useEffect(() => {
-    window.addEventListener('message', (event) => {
-      console.log('event', event.data);
-      if (event.data.type === 'login' && event.origin === 'http://127.0.0.1:8080') {
-        window.removeEventListener('message', () => {});
-        navigate(ROUTES.ACCOUNT.path);
-      }
-    });
+  // useEffect(() => {
+  //   window.addEventListener('message', (event) => {
+  //     console.log('event', event.data);
+  //     if (event.data.type === 'login' && event.origin === 'http://127.0.0.1:8080') {
+  //       window.removeEventListener('message', () => {});
+  //       navigate(ROUTES.ACCOUNT.path);
+  //     }
+  //   });
 
-    // remove event listener on cleanup
-    return () => {
-      window.removeEventListener('message', () => {});
-    };
-  }, [navigate]);
+  //   // remove event listener on cleanup
+  //   return () => {
+  //     window.removeEventListener('message', () => {});
+  //   };
+  // }, [navigate]);
 
   return (
     <div>
