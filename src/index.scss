@@ -14,6 +14,11 @@
   -webkit-text-size-adjust: 100%;
 }
 
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -29,6 +34,9 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: none !important;
+  overflow: auto;
+  height: 100%;
 }
 
 h1 {

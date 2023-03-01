@@ -1,0 +1,14 @@
+mutation signUp($input: UsersPermissionsLoginInput!) {
+  login(input: $input) {
+    user {
+      id
+      username
+      role {
+        id
+        name
+        description
+      }
+    }
+    jwt
+  }
+}

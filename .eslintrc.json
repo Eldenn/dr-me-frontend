@@ -1,4 +1,14 @@
 {
+  "ignorePatterns": [
+    "node_modules/",
+    "vite.config.ts",
+    "gradient.ts",
+    "src/**/*.old.ts",
+    "src/**/*.old/*",
+    "schemagen.js",
+    "codegen.js",
+    "src/**/**/graphql.tsx"
+  ],
   "extends": [
     "airbnb-typescript",
     "prettier",

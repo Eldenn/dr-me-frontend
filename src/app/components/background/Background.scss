@@ -1,0 +1,15 @@
+.st1 {
+  opacity: 0.6;
+  fill: #0c3157;
+  enable-background: new;
+}
+
+.background {
+  enable-background:new 0 0 1300 550;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
