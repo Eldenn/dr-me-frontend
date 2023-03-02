@@ -18,31 +18,28 @@ import React, { FC, useCallback } from 'react';
 import { Link as ReachLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ROUTES from '@/app/constants/navigation';
-import { useSignUpMutation } from '@/app/generated/graphql';
+import { useAuth } from '@/app/providers/AuthProvider';
 
 interface IFieldsForm {
   email: string;
   password: string;
+  remember: boolean;
 }
 
 const Home: FC = () => {
-  const { handleSubmit, register, formState: { isValid } } = useForm<IFieldsForm>();
+  const { login, isLoading } = useAuth();
+  const {
+    handleSubmit,
+    register,
+    formState: { isValid },
+  } = useForm<IFieldsForm>();
   // const navigate = useNavigate();
   const { t } = useTranslation();
   // const { fromDomain } = useParams();
 
-  const [signUp, { data, error, loading }] = useSignUpMutation();
-
   const handleLogin: SubmitHandler<IFieldsForm> = useCallback(
-    ({ email, password }) => {
-      signUp({
-        variables: {
-          input: {
-            identifier: email,
-            password,
-          },
-        },
-      });
+    ({ email, password, remember }) => {
+      login(email, password, remember);
       //navigate(ROUTES.ACCOUNT.path);
       //window.open('http://127.0.0.1:8080/', '', 'width=800,height=600');
 
@@ -59,7 +56,7 @@ const Home: FC = () => {
       //   window.open(`http://127.0.0.1:8080/test`, '', 'width=800,height=600');
       // }
     },
-    [signUp],
+    [login],
   );
 
   // add event listener to receive a message from the popup
@@ -117,14 +114,14 @@ const Home: FC = () => {
               </FormControl>
               <Stack spacing={10}>
                 <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
-                  <Checkbox>{t('form.remember')}</Checkbox>
+                  <Checkbox {...register('remember')}>{t('form.remember')}</Checkbox>
                   <Link as={ReachLink} to={ROUTES.FORGOTTEN_PASSWORD.path} color={'blue.400'}>
                     {t('form.forgot')}
                   </Link>
                 </Stack>
                 <Button
                   type={'submit'}
-                  isLoading={loading}
+                  isLoading={isLoading}
                   isDisabled={!isValid}
                   bg={'blue.400'}
                   color={'white'}

@@ -8,6 +8,7 @@ import '@/app/services/i18n';
 import Layout from '@/app/components/layout/Layout';
 import { ApolloProvider } from '@apollo/client';
 import { useApolloClient } from '@/app/hooks/useApolloClient';
+import { AuthProvider } from '@/app/providers/AuthProvider';
 
 
 export const App = () => {
@@ -17,11 +18,13 @@ export const App = () => {
     if (apolloClient) {
       return (
         <ApolloProvider client={apolloClient}>
-          <ChakraProvider>
-            <Layout>
-              <Router />
-            </Layout>
-          </ChakraProvider>
+          <AuthProvider>
+            <ChakraProvider>
+              <Layout>
+                <Router />
+              </Layout>
+            </ChakraProvider>
+          </AuthProvider>
         </ApolloProvider>
       )
     }

@@ -8,3 +8,4 @@ export const TOAST_STATUS: ToastStatusConstant = {
   WARNING: 'warning',
   ERROR: 'error',
 };
+export const TOAST_POSITION = 'top';

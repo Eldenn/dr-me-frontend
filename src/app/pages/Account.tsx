@@ -15,16 +15,15 @@ import {
 import React, { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlinePoweroff } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom';
-import ROUTES from '@/app/constants/navigation';
+import { useAuth } from '@/app/providers/AuthProvider';
 
 const Account: FC = () => {
+  const { logout } = useAuth();
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   const handleSignOut = useCallback(() => {
-    navigate(ROUTES.HOME.path);
-  }, [navigate]);
+    logout();
+  }, [logout]);
 
   return (
     <Grid gap={6} rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8} width={'4xl'}>

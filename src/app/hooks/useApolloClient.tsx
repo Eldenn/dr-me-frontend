@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { onError } from '@apollo/client/link/error';
 import { useToast } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { TOAST_DURATION, TOAST_STATUS } from '@/app/constants/toast';
+import { TOAST_DURATION, TOAST_POSITION, TOAST_STATUS } from '@/app/constants/toast';
 import { ERRORS } from '@/app/constants/errors';
 
 export const useApolloClient = () => {
@@ -28,6 +28,7 @@ export const useApolloClient = () => {
               toast({
                 ...toastOptions,
                 title: ERRORS[code],
+                position: TOAST_POSITION,
               });
             }
           },
