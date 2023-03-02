@@ -1,4 +1,4 @@
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   Box,
   FormControl,
@@ -12,17 +12,13 @@ import {
   Text,
   useColorModeValue,
   Center,
-  FormErrorMessage,
-  useToast,
-  UseToastOptions,
 } from '@chakra-ui/react';
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useCallback } from 'react';
 // import { Link as ReachLink, useParams } from 'react-router-dom';
 import { Link as ReachLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ROUTES from '@/app/constants/navigation';
 import { useSignUpMutation } from '@/app/generated/graphql';
-import { TOAST_DURATION, TOAST_STATUS } from '@/app/constants/toast';
 
 interface IFieldsForm {
   email: string;
@@ -31,7 +27,6 @@ interface IFieldsForm {
 
 const Home: FC = () => {
   const { handleSubmit, register } = useForm<IFieldsForm>();
-  const toast = useToast();
   // const navigate = useNavigate();
   const { t } = useTranslation();
   // const { fromDomain } = useParams();
@@ -66,17 +61,6 @@ const Home: FC = () => {
     },
     [signUp],
   );
-
-  useEffect(() => {
-    if (error) {
-      toast({
-        title: t(`error.${error.graphQLErrors[0].extensions.code}`),
-        status: TOAST_STATUS.ERROR,
-        duration: TOAST_DURATION,
-        isClosable: true,
-      });
-    }
-  }, [data, error, t, toast]);
 
   // add event listener to receive a message from the popup
   // useEffect(() => {

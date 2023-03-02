@@ -70,5 +70,9 @@
       "admin": "Admin",
       "user": "User"
     }
+  },
+  "error": {
+    "network": "Network error: Unable to connect to the server",
+    "badUserInput": "Incorrect email or password."
   }
 }
