@@ -26,7 +26,7 @@ interface IFieldsForm {
 }
 
 const Home: FC = () => {
-  const { handleSubmit, register } = useForm<IFieldsForm>();
+  const { handleSubmit, register, formState: { isValid } } = useForm<IFieldsForm>();
   // const navigate = useNavigate();
   const { t } = useTranslation();
   // const { fromDomain } = useParams();
@@ -125,6 +125,7 @@ const Home: FC = () => {
                 <Button
                   type={'submit'}
                   isLoading={loading}
+                  isDisabled={!isValid}
                   bg={'blue.400'}
                   color={'white'}
                   _hover={{
