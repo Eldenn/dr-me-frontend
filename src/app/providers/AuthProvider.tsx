@@ -34,8 +34,8 @@ const AuthContext = createContext<IAuthContext>({
 // Define our authentication provider component
 const AuthProvider: React.FC<IAuthProviderProps> = ({ children }: IAuthProviderProps) => {
   const [signUp, { data, loading: isLoading }] = useSignUpMutation();
-  const [user, setUser, setUserPersist] = usePersistState<UsersPermissionsMe | null>(PERSIST.USER, null, false);
-  const [token, setToken, setTokenPersist] = usePersistState<string | null>(PERSIST.TOKEN, null, false);
+  const [user, setUser, setUserPersist] = usePersistState<UsersPermissionsMe | null>(PERSIST.USER, null);
+  const [token, setToken, setTokenPersist] = usePersistState<string | null>(PERSIST.TOKEN, null);
 
   useEffect(() => {
     if (data) {
@@ -49,10 +49,8 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }: IAuthProviderP
   const logout = useCallback(async () => {
     setUser(null);
     setToken(null);
-
-    setUserPersist(false);
-    setTokenPersist(false);
-  }, [setToken, setTokenPersist, setUser, setUserPersist]);
+    localStorage.clear();
+  }, [setToken, setUser]);
 
   const login = useCallback(
     async (identifier: string, password: string, isPersist: boolean) => {
