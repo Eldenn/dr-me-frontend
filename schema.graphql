@@ -122,7 +122,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = ExtraRole | I18NLocale | Right | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = ExtraRole | I18NLocale | PersonalInformation | Right | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type I18NLocale {
   code: String
@@ -237,6 +237,7 @@ type Mutation {
   """Change user password. Confirm with the current password."""
   changePassword(currentPassword: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
   createExtraRole(data: ExtraRoleInput!): ExtraRoleEntityResponse
+  createPersonalInformation(data: PersonalInformationInput!): PersonalInformationEntityResponse
   createRight(data: RightInput!): RightEntityResponse
   createUploadFile(data: UploadFileInput!): UploadFileEntityResponse
   createUploadFolder(data: UploadFolderInput!): UploadFolderEntityResponse
@@ -247,6 +248,7 @@ type Mutation {
   """Create a new user"""
   createUsersPermissionsUser(data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
   deleteExtraRole(id: ID!): ExtraRoleEntityResponse
+  deletePersonalInformation(id: ID!): PersonalInformationEntityResponse
   deleteRight(id: ID!): RightEntityResponse
   deleteUploadFile(id: ID!): UploadFileEntityResponse
   deleteUploadFolder(id: ID!): UploadFolderEntityResponse
@@ -275,6 +277,8 @@ type Mutation {
   resetPassword(code: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
   updateExtraRole(data: ExtraRoleInput!, id: ID!): ExtraRoleEntityResponse
   updateFileInfo(id: ID!, info: FileInfoInput): UploadFileEntityResponse!
+  updateMyPersonalInformations(input: PersonalInformationInput): PersonalInformation
+  updatePersonalInformation(data: PersonalInformationInput!, id: ID!): PersonalInformationEntityResponse
   updateRight(data: RightInput!, id: ID!): RightEntityResponse
   updateUploadFile(data: UploadFileInput!, id: ID!): UploadFileEntityResponse
   updateUploadFolder(data: UploadFolderInput!, id: ID!): UploadFolderEntityResponse
@@ -301,6 +305,63 @@ input PaginationArg {
   start: Int
 }
 
+type PersonalInformation {
+  address: String
+  city: String
+  country: String
+  createdAt: DateTime
+  firstname: String
+  lastname: String
+  phone: String
+  profilePhoto: UploadFileEntityResponse
+  updatedAt: DateTime
+  user: UsersPermissionsUserEntityResponse
+  zip: String
+}
+
+type PersonalInformationEntity {
+  attributes: PersonalInformation
+  id: ID
+}
+
+type PersonalInformationEntityResponse {
+  data: PersonalInformationEntity
+}
+
+type PersonalInformationEntityResponseCollection {
+  data: [PersonalInformationEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+input PersonalInformationFiltersInput {
+  address: StringFilterInput
+  and: [PersonalInformationFiltersInput]
+  city: StringFilterInput
+  country: StringFilterInput
+  createdAt: DateTimeFilterInput
+  firstname: StringFilterInput
+  id: IDFilterInput
+  lastname: StringFilterInput
+  not: PersonalInformationFiltersInput
+  or: [PersonalInformationFiltersInput]
+  phone: StringFilterInput
+  updatedAt: DateTimeFilterInput
+  user: UsersPermissionsUserFiltersInput
+  zip: StringFilterInput
+}
+
+input PersonalInformationInput {
+  address: String
+  city: String
+  country: String
+  firstname: String
+  lastname: String
+  phone: String
+  profilePhoto: ID
+  user: ID
+  zip: String
+}
+
 enum PublicationState {
   LIVE
   PREVIEW
@@ -312,6 +373,9 @@ type Query {
   i18NLocale(id: ID): I18NLocaleEntityResponse
   i18NLocales(filters: I18NLocaleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): I18NLocaleEntityResponseCollection
   me: UsersPermissionsMe
+  myPersonalInformations: PersonalInformation
+  personalInformation(id: ID): PersonalInformationEntityResponse
+  personalInformations(filters: PersonalInformationFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): PersonalInformationEntityResponseCollection
   right(id: ID): RightEntityResponse
   rights(filters: RightFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): RightEntityResponseCollection
   uploadFile(id: ID): UploadFileEntityResponse
@@ -655,6 +719,7 @@ type UsersPermissionsUser {
   createdAt: DateTime
   email: String!
   extraRoles(filters: ExtraRoleFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ExtraRoleRelationResponseCollection
+  personalInformation: PersonalInformationEntityResponse
   provider: String
   role: UsersPermissionsRoleEntityResponse
   updatedAt: DateTime
@@ -687,6 +752,7 @@ input UsersPermissionsUserFiltersInput {
   not: UsersPermissionsUserFiltersInput
   or: [UsersPermissionsUserFiltersInput]
   password: StringFilterInput
+  personalInformation: PersonalInformationFiltersInput
   provider: StringFilterInput
   resetPasswordToken: StringFilterInput
   role: UsersPermissionsRoleFiltersInput
@@ -701,6 +767,7 @@ input UsersPermissionsUserInput {
   email: String
   extraRoles: [ID]
   password: String
+  personalInformation: ID
   provider: String
   resetPasswordToken: String
   role: ID

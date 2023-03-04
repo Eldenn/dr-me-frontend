@@ -1,0 +1,23 @@
+mutation updateMyPersonalInformations($input: PersonalInformationInput) {
+  updateMyPersonalInformations(input: $input) {
+		firstname
+		lastname
+		profilePhoto {
+			data {
+				attributes {
+					name
+					alternativeText
+					width
+					height
+					url
+					previewUrl
+				}
+			}
+		}
+		phone
+		address
+		city
+		zip
+		country
+	}
+}

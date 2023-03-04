@@ -145,7 +145,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']>;
 };
 
-export type GenericMorph = ExtraRole | I18NLocale | Right | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = ExtraRole | I18NLocale | PersonalInformation | Right | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -260,6 +260,7 @@ export type Mutation = {
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   createExtraRole?: Maybe<ExtraRoleEntityResponse>;
+  createPersonalInformation?: Maybe<PersonalInformationEntityResponse>;
   createRight?: Maybe<RightEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -268,6 +269,7 @@ export type Mutation = {
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   deleteExtraRole?: Maybe<ExtraRoleEntityResponse>;
+  deletePersonalInformation?: Maybe<PersonalInformationEntityResponse>;
   deleteRight?: Maybe<RightEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -288,6 +290,8 @@ export type Mutation = {
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   updateExtraRole?: Maybe<ExtraRoleEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
+  updateMyPersonalInformations?: Maybe<PersonalInformation>;
+  updatePersonalInformation?: Maybe<PersonalInformationEntityResponse>;
   updateRight?: Maybe<RightEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -308,6 +312,11 @@ export type MutationChangePasswordArgs = {
 
 export type MutationCreateExtraRoleArgs = {
   data: ExtraRoleInput;
+};
+
+
+export type MutationCreatePersonalInformationArgs = {
+  data: PersonalInformationInput;
 };
 
 
@@ -337,6 +346,11 @@ export type MutationCreateUsersPermissionsUserArgs = {
 
 
 export type MutationDeleteExtraRoleArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeletePersonalInformationArgs = {
   id: Scalars['ID'];
 };
 
@@ -418,6 +432,17 @@ export type MutationUpdateFileInfoArgs = {
 };
 
 
+export type MutationUpdateMyPersonalInformationsArgs = {
+  input?: InputMaybe<PersonalInformationInput>;
+};
+
+
+export type MutationUpdatePersonalInformationArgs = {
+  data: PersonalInformationInput;
+  id: Scalars['ID'];
+};
+
+
 export type MutationUpdateRightArgs = {
   data: RightInput;
   id: Scalars['ID'];
@@ -471,6 +496,67 @@ export type PaginationArg = {
   start?: InputMaybe<Scalars['Int']>;
 };
 
+export type PersonalInformation = {
+  __typename?: 'PersonalInformation';
+  address?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  firstname?: Maybe<Scalars['String']>;
+  lastname?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  profilePhoto?: Maybe<UploadFileEntityResponse>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  user?: Maybe<UsersPermissionsUserEntityResponse>;
+  zip?: Maybe<Scalars['String']>;
+};
+
+export type PersonalInformationEntity = {
+  __typename?: 'PersonalInformationEntity';
+  attributes?: Maybe<PersonalInformation>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type PersonalInformationEntityResponse = {
+  __typename?: 'PersonalInformationEntityResponse';
+  data?: Maybe<PersonalInformationEntity>;
+};
+
+export type PersonalInformationEntityResponseCollection = {
+  __typename?: 'PersonalInformationEntityResponseCollection';
+  data: Array<PersonalInformationEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type PersonalInformationFiltersInput = {
+  address?: InputMaybe<StringFilterInput>;
+  and?: InputMaybe<Array<InputMaybe<PersonalInformationFiltersInput>>>;
+  city?: InputMaybe<StringFilterInput>;
+  country?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  firstname?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  lastname?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<PersonalInformationFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<PersonalInformationFiltersInput>>>;
+  phone?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  user?: InputMaybe<UsersPermissionsUserFiltersInput>;
+  zip?: InputMaybe<StringFilterInput>;
+};
+
+export type PersonalInformationInput = {
+  address?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  firstname?: InputMaybe<Scalars['String']>;
+  lastname?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  profilePhoto?: InputMaybe<Scalars['ID']>;
+  user?: InputMaybe<Scalars['ID']>;
+  zip?: InputMaybe<Scalars['String']>;
+};
+
 export enum PublicationState {
   Live = 'LIVE',
   Preview = 'PREVIEW'
@@ -483,6 +569,9 @@ export type Query = {
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
+  myPersonalInformations?: Maybe<PersonalInformation>;
+  personalInformation?: Maybe<PersonalInformationEntityResponse>;
+  personalInformations?: Maybe<PersonalInformationEntityResponseCollection>;
   right?: Maybe<RightEntityResponse>;
   rights?: Maybe<RightEntityResponseCollection>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
@@ -516,6 +605,18 @@ export type QueryI18NLocaleArgs = {
 
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type QueryPersonalInformationArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type QueryPersonalInformationsArgs = {
+  filters?: InputMaybe<PersonalInformationFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
@@ -967,6 +1068,7 @@ export type UsersPermissionsUser = {
   createdAt?: Maybe<Scalars['DateTime']>;
   email: Scalars['String'];
   extraRoles?: Maybe<ExtraRoleRelationResponseCollection>;
+  personalInformation?: Maybe<PersonalInformationEntityResponse>;
   provider?: Maybe<Scalars['String']>;
   role?: Maybe<UsersPermissionsRoleEntityResponse>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -1010,6 +1112,7 @@ export type UsersPermissionsUserFiltersInput = {
   not?: InputMaybe<UsersPermissionsUserFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<UsersPermissionsUserFiltersInput>>>;
   password?: InputMaybe<StringFilterInput>;
+  personalInformation?: InputMaybe<PersonalInformationFiltersInput>;
   provider?: InputMaybe<StringFilterInput>;
   resetPasswordToken?: InputMaybe<StringFilterInput>;
   role?: InputMaybe<UsersPermissionsRoleFiltersInput>;
@@ -1024,6 +1127,7 @@ export type UsersPermissionsUserInput = {
   email?: InputMaybe<Scalars['String']>;
   extraRoles?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   password?: InputMaybe<Scalars['String']>;
+  personalInformation?: InputMaybe<Scalars['ID']>;
   provider?: InputMaybe<Scalars['String']>;
   resetPasswordToken?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Scalars['ID']>;
@@ -1042,9 +1146,25 @@ export type SignUpMutationVariables = Exact<{
 
 export type SignUpMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', id: string, username: string, role?: { __typename?: 'UsersPermissionsMeRole', id: string, name: string, description?: string | null } | null } } };
 
+export type MyPersonalInformationQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyPersonalInformationQuery = { __typename?: 'Query', myPersonalInformations?: { __typename?: 'PersonalInformation', firstname?: string | null, lastname?: string | null, phone?: string | null, address?: string | null, city?: string | null, zip?: string | null, country?: string | null, profilePhoto?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', name: string, alternativeText?: string | null, width?: number | null, height?: number | null, url: string, previewUrl?: string | null } | null } | null } | null } | null };
+
+export type UpdateMyPersonalInformationsMutationVariables = Exact<{
+  input?: InputMaybe<PersonalInformationInput>;
+}>;
+
+
+export type UpdateMyPersonalInformationsMutation = { __typename?: 'Mutation', updateMyPersonalInformations?: { __typename?: 'PersonalInformation', firstname?: string | null, lastname?: string | null, phone?: string | null, address?: string | null, city?: string | null, zip?: string | null, country?: string | null, profilePhoto?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', name: string, alternativeText?: string | null, width?: number | null, height?: number | null, url: string, previewUrl?: string | null } | null } | null } | null } | null };
+
 export const namedOperations = {
+  Query: {
+    myPersonalInformation: 'myPersonalInformation'
+  },
   Mutation: {
-    signUp: 'signUp'
+    signUp: 'signUp',
+    updateMyPersonalInformations: 'updateMyPersonalInformations'
   }
 }
 
@@ -1090,3 +1210,106 @@ export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignU
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
+export const MyPersonalInformationDocument = gql`
+    query myPersonalInformation {
+  myPersonalInformations {
+    firstname
+    lastname
+    profilePhoto {
+      data {
+        attributes {
+          name
+          alternativeText
+          width
+          height
+          url
+          previewUrl
+        }
+      }
+    }
+    phone
+    address
+    city
+    zip
+    country
+  }
+}
+    `;
+
+/**
+ * __useMyPersonalInformationQuery__
+ *
+ * To run a query within a React component, call `useMyPersonalInformationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyPersonalInformationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyPersonalInformationQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyPersonalInformationQuery(baseOptions?: Apollo.QueryHookOptions<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>(MyPersonalInformationDocument, options);
+      }
+export function useMyPersonalInformationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>(MyPersonalInformationDocument, options);
+        }
+export type MyPersonalInformationQueryHookResult = ReturnType<typeof useMyPersonalInformationQuery>;
+export type MyPersonalInformationLazyQueryHookResult = ReturnType<typeof useMyPersonalInformationLazyQuery>;
+export type MyPersonalInformationQueryResult = Apollo.QueryResult<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>;
+export const UpdateMyPersonalInformationsDocument = gql`
+    mutation updateMyPersonalInformations($input: PersonalInformationInput) {
+  updateMyPersonalInformations(input: $input) {
+    firstname
+    lastname
+    profilePhoto {
+      data {
+        attributes {
+          name
+          alternativeText
+          width
+          height
+          url
+          previewUrl
+        }
+      }
+    }
+    phone
+    address
+    city
+    zip
+    country
+  }
+}
+    `;
+export type UpdateMyPersonalInformationsMutationFn = Apollo.MutationFunction<UpdateMyPersonalInformationsMutation, UpdateMyPersonalInformationsMutationVariables>;
+
+/**
+ * __useUpdateMyPersonalInformationsMutation__
+ *
+ * To run a mutation, you first call `useUpdateMyPersonalInformationsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMyPersonalInformationsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMyPersonalInformationsMutation, { data, loading, error }] = useUpdateMyPersonalInformationsMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateMyPersonalInformationsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMyPersonalInformationsMutation, UpdateMyPersonalInformationsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMyPersonalInformationsMutation, UpdateMyPersonalInformationsMutationVariables>(UpdateMyPersonalInformationsDocument, options);
+      }
+export type UpdateMyPersonalInformationsMutationHookResult = ReturnType<typeof useUpdateMyPersonalInformationsMutation>;
+export type UpdateMyPersonalInformationsMutationResult = Apollo.MutationResult<UpdateMyPersonalInformationsMutation>;
+export type UpdateMyPersonalInformationsMutationOptions = Apollo.BaseMutationOptions<UpdateMyPersonalInformationsMutation, UpdateMyPersonalInformationsMutationVariables>;

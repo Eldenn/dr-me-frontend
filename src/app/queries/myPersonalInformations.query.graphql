@@ -1,0 +1,23 @@
+query myPersonalInformation {
+  myPersonalInformations {
+		firstname
+		lastname
+		profilePhoto {
+			data {
+				attributes {
+					name
+					alternativeText
+					width
+					height
+					url
+					previewUrl
+				}
+			}
+		}
+		phone
+		address
+		city
+		zip
+		country
+	}
+}
