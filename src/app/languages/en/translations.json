@@ -72,6 +72,7 @@
     }
   },
   "error": {
+    "forbidden": "You are not allowed to access this page",
     "network": "Network error: Unable to connect to the server",
     "badUserInput": "Incorrect email or password."
   }

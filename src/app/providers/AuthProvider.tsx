@@ -1,7 +1,9 @@
 import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo } from 'react';
+import { setContext } from '@apollo/client/link/context';
 import { useSignUpMutation, UsersPermissionsMe } from '@/app/generated/graphql';
 import usePersistState from '@/app/hooks/usePersistState';
 import { PERSIST } from '@/app/constants/persist';
+import { useApolloClient } from '@apollo/client';
 
 // Define the interface for our authentication context
 interface IAuthContext {
@@ -33,6 +35,7 @@ const AuthContext = createContext<IAuthContext>({
 
 // Define our authentication provider component
 const AuthProvider: React.FC<IAuthProviderProps> = ({ children }: IAuthProviderProps) => {
+  const apolloClient = useApolloClient();
   const [signUp, { data, loading: isLoading }] = useSignUpMutation();
   const [user, setUser, setUserPersist] = usePersistState<UsersPermissionsMe | null>(PERSIST.USER, null);
   const [token, setToken, setTokenPersist] = usePersistState<string | null>(PERSIST.TOKEN, null);
@@ -45,6 +48,21 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }: IAuthProviderP
       }
     }
   }, [data, setToken, setUser]);
+
+  useEffect(() => {
+    if (token) {
+      const authLink = setContext(async (_, { headers }) => {
+        return {
+          headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : '',
+          },
+        };
+      });
+
+      apolloClient.setLink(authLink.concat(apolloClient.link));
+    }
+  })
 
   const logout = useCallback(async () => {
     setUser(null);
