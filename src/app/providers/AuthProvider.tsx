@@ -13,6 +13,7 @@ interface IAuthContext {
   logout: () => void;
   isLoading: boolean;
   isAuthenticated: boolean;
+  setUser: (user: UsersPermissionsMe | null) => void;
   // logout: () => Promise<void>;
   // hasPermission: (permission: string) => boolean;
 }
@@ -29,6 +30,7 @@ const AuthContext = createContext<IAuthContext>({
   logout: async () => {},
   isLoading: false,
   isAuthenticated: false,
+  setUser: () => {},
   // logout: async () => {},
   // hasPermission: (permission: string) => false,
 });
@@ -97,8 +99,9 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }: IAuthProviderP
       logout,
       isLoading,
       isAuthenticated,
+      setUser,
     }),
-    [isAuthenticated, isLoading, login, logout, token, user],
+    [isAuthenticated, isLoading, login, logout, setUser, token, user],
   );
 
   // Check if user has permission to access a feature

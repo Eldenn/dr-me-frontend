@@ -14,7 +14,7 @@ export const useApolloClient = () => {
   useEffect(() => {
     const { REACT_APP_STRAPI_HOST, REACT_APP_STRAPI_PORT } = process.env;
 
-    const errorLink = onError(({ graphQLErrors, networkError }) => {
+    const errorLink = onError(({ graphQLErrors, networkError, operation: { operationName } }) => {
       const toastOptions = {
         status: TOAST_STATUS.ERROR,
         duration: TOAST_DURATION,
@@ -23,13 +23,17 @@ export const useApolloClient = () => {
 
       if (graphQLErrors) {
         graphQLErrors.forEach(
-          ({ extensions: { code } }) => {
-            if (typeof code === 'string' && ERRORS[code]) {
-              toast({
-                ...toastOptions,
-                title: ERRORS[code],
-                position: TOAST_POSITION,
-              });
+          ({ message }) => {
+            if (ERRORS[operationName]) {
+              const error = ERRORS[operationName].find((errorElement) => errorElement.message === message);
+
+              if (error) {
+                toast({
+                  ...toastOptions,
+                  title: t(`error.${error.code}`),
+                  position: TOAST_POSITION,
+                });
+              }
             }
           },
           // console.log(

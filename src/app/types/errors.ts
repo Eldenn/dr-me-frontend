@@ -1,3 +1,6 @@
 export type ErrorCodes = {
-  [key: string]: string;
+  [key: string]: {
+    message: string;
+    code: string;
+  }[];
 }

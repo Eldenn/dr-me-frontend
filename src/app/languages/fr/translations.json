@@ -74,6 +74,10 @@
   "error": {
     "forbidden": "Accès refusé. Vous n’avez pas les droits nécessaires pour accéder à cette page",
     "network": "Erreur réseau : impossible de se connecter au serveur",
-    "badUserInput": "Email ou mot de passe incorrect."
+    "badUserInput": "Email ou mot de passe incorrect",
+    "uniqueEmail": "Cet email est déjà utilisé"
+  },
+  "success": {
+    "profile": "Vos informations ont été mises à jour"
   }
 }

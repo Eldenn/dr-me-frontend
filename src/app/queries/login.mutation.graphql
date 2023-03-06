@@ -3,6 +3,7 @@ mutation signUp($input: UsersPermissionsLoginInput!) {
     user {
       id
       username
+      email
       role {
         id
         name

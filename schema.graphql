@@ -278,6 +278,7 @@ type Mutation {
   updateExtraRole(data: ExtraRoleInput!, id: ID!): ExtraRoleEntityResponse
   updateFileInfo(id: ID!, info: FileInfoInput): UploadFileEntityResponse!
   updateMyPersonalInformations(input: PersonalInformationInput): PersonalInformation
+  updateMyUser(input: MyUserInput): UsersPermissionsUser
   updatePersonalInformation(data: PersonalInformationInput!, id: ID!): PersonalInformationEntityResponse
   updateRight(data: RightInput!, id: ID!): RightEntityResponse
   updateUploadFile(data: UploadFileInput!, id: ID!): UploadFileEntityResponse
@@ -289,6 +290,11 @@ type Mutation {
   """Update an existing user"""
   updateUsersPermissionsUser(data: UsersPermissionsUserInput!, id: ID!): UsersPermissionsUserEntityResponse!
   upload(field: String, file: Upload!, info: FileInfoInput, ref: String, refId: ID): UploadFileEntityResponse!
+}
+
+input MyUserInput {
+  email: String
+  username: String
 }
 
 type Pagination {

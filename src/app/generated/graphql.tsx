@@ -291,6 +291,7 @@ export type Mutation = {
   updateExtraRole?: Maybe<ExtraRoleEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updateMyPersonalInformations?: Maybe<PersonalInformation>;
+  updateMyUser?: Maybe<UsersPermissionsUser>;
   updatePersonalInformation?: Maybe<PersonalInformationEntityResponse>;
   updateRight?: Maybe<RightEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -437,6 +438,11 @@ export type MutationUpdateMyPersonalInformationsArgs = {
 };
 
 
+export type MutationUpdateMyUserArgs = {
+  input?: InputMaybe<MyUserInput>;
+};
+
+
 export type MutationUpdatePersonalInformationArgs = {
   data: PersonalInformationInput;
   id: Scalars['ID'];
@@ -479,6 +485,11 @@ export type MutationUploadArgs = {
   info?: InputMaybe<FileInfoInput>;
   ref?: InputMaybe<Scalars['String']>;
   refId?: InputMaybe<Scalars['ID']>;
+};
+
+export type MyUserInput = {
+  email?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
 };
 
 export type Pagination = {
@@ -1144,7 +1155,7 @@ export type SignUpMutationVariables = Exact<{
 }>;
 
 
-export type SignUpMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', id: string, username: string, role?: { __typename?: 'UsersPermissionsMeRole', id: string, name: string, description?: string | null } | null } } };
+export type SignUpMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, role?: { __typename?: 'UsersPermissionsMeRole', id: string, name: string, description?: string | null } | null } } };
 
 export type MyPersonalInformationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1158,13 +1169,21 @@ export type UpdateMyPersonalInformationsMutationVariables = Exact<{
 
 export type UpdateMyPersonalInformationsMutation = { __typename?: 'Mutation', updateMyPersonalInformations?: { __typename?: 'PersonalInformation', firstname?: string | null, lastname?: string | null, phone?: string | null, address?: string | null, city?: string | null, zip?: string | null, country?: string | null, profilePhoto?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', name: string, alternativeText?: string | null, width?: number | null, height?: number | null, url: string, previewUrl?: string | null } | null } | null } | null } | null };
 
+export type UpdateMyUserMutationVariables = Exact<{
+  input?: InputMaybe<MyUserInput>;
+}>;
+
+
+export type UpdateMyUserMutation = { __typename?: 'Mutation', updateMyUser?: { __typename?: 'UsersPermissionsUser', email: string, username: string } | null };
+
 export const namedOperations = {
   Query: {
     myPersonalInformation: 'myPersonalInformation'
   },
   Mutation: {
     signUp: 'signUp',
-    updateMyPersonalInformations: 'updateMyPersonalInformations'
+    updateMyPersonalInformations: 'updateMyPersonalInformations',
+    updateMyUser: 'updateMyUser'
   }
 }
 
@@ -1174,6 +1193,7 @@ export const SignUpDocument = gql`
     user {
       id
       username
+      email
       role {
         id
         name
@@ -1313,3 +1333,37 @@ export function useUpdateMyPersonalInformationsMutation(baseOptions?: Apollo.Mut
 export type UpdateMyPersonalInformationsMutationHookResult = ReturnType<typeof useUpdateMyPersonalInformationsMutation>;
 export type UpdateMyPersonalInformationsMutationResult = Apollo.MutationResult<UpdateMyPersonalInformationsMutation>;
 export type UpdateMyPersonalInformationsMutationOptions = Apollo.BaseMutationOptions<UpdateMyPersonalInformationsMutation, UpdateMyPersonalInformationsMutationVariables>;
+export const UpdateMyUserDocument = gql`
+    mutation updateMyUser($input: MyUserInput) {
+  updateMyUser(input: $input) {
+    email
+    username
+  }
+}
+    `;
+export type UpdateMyUserMutationFn = Apollo.MutationFunction<UpdateMyUserMutation, UpdateMyUserMutationVariables>;
+
+/**
+ * __useUpdateMyUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateMyUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMyUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMyUserMutation, { data, loading, error }] = useUpdateMyUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateMyUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMyUserMutation, UpdateMyUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMyUserMutation, UpdateMyUserMutationVariables>(UpdateMyUserDocument, options);
+      }
+export type UpdateMyUserMutationHookResult = ReturnType<typeof useUpdateMyUserMutation>;
+export type UpdateMyUserMutationResult = Apollo.MutationResult<UpdateMyUserMutation>;
+export type UpdateMyUserMutationOptions = Apollo.BaseMutationOptions<UpdateMyUserMutation, UpdateMyUserMutationVariables>;
