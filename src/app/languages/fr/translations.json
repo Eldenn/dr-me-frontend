@@ -50,6 +50,7 @@
   },
   "profile": {
     "title": "Mon profil",
+    "personal": "Informations personnelles",
     "success": {
       "update": "Vos informations ont été mises à jour."
     },
@@ -74,7 +75,7 @@
   "error": {
     "forbidden": "Accès refusé. Vous n’avez pas les droits nécessaires pour accéder à cette page",
     "network": "Erreur réseau : impossible de se connecter au serveur",
-    "badUserInput": "Email ou mot de passe incorrect",
+    "invalidCredentials": "Email ou mot de passe incorrect",
     "uniqueEmail": "Cet email est déjà utilisé"
   },
   "success": {

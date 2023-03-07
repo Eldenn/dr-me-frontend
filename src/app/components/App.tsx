@@ -9,7 +9,7 @@ import Layout from '@/app/components/layout/Layout';
 import { ApolloProvider } from '@apollo/client';
 import { useApolloClient } from '@/app/hooks/useApolloClient';
 import { AuthProvider } from '@/app/providers/AuthProvider';
-
+import ErrorsHandler from './errorsHandler/ErrorsHandler';
 
 export const App = () => {
   const { client: apolloClient } = useApolloClient();
@@ -19,24 +19,22 @@ export const App = () => {
       return (
         <ApolloProvider client={apolloClient}>
           <AuthProvider>
-            <ChakraProvider>
-              <Layout>
-                <Router />
-              </Layout>
-            </ChakraProvider>
+            <ErrorsHandler>
+              <ChakraProvider>
+                <Layout>
+                  <Router />
+                </Layout>
+              </ChakraProvider>
+            </ErrorsHandler>
           </AuthProvider>
         </ApolloProvider>
-      )
+      );
     }
 
     return null;
   }, [apolloClient]);
 
-  return (
-    <React.StrictMode>
-      {renderApp}
-    </React.StrictMode>
-  )
+  return <React.StrictMode>{renderApp}</React.StrictMode>;
 };
 
 export default App;

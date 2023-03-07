@@ -14,6 +14,10 @@ import {
   SkeletonCircle,
   SkeletonText,
   useToast,
+  Card,
+  CardHeader,
+  CardBody,
+  Text,
 } from '@chakra-ui/react';
 import React, { FC, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -105,7 +109,7 @@ const Account: FC = () => {
           {
             query: MyPersonalInformationDocument,
           },
-        ]
+        ],
       });
 
       updateMyUser({
@@ -158,75 +162,126 @@ const Account: FC = () => {
         </GridItem>
         <GridItem colSpan={6}>
           <Center>
-            <Avatar size={'2xl'} name={'Segun Adebayo'} src={'https://bit.ly/sage-adebayo'} />
+            <label>
+              <input
+                type={'file'}
+                accept={'image/*'}
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                      if (event.target?.result) {
+                        setValue('profilePhoto', event.target.result as string);
+                      }
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                  }
+                }}
+                style={{ display: 'none' }}
+              />
+              <Avatar
+                size={'2xl'}
+                name={`${data?.myPersonalInformations?.firstname} ${data?.myPersonalInformations?.lastname}`}
+                src={'https://bit.ly/sage-adebayo'}
+                _hover={{
+                  cursor: 'pointer',
+                }}
+              />
+            </label>
           </Center>
           <Center mt={3}>
             <Badge>{t('profile.roles.admin')}</Badge>
           </Center>
         </GridItem>
-        <GridItem colSpan={3}>
-          <FormControl>
-            <FormLabel>{t('profile.form.email')}</FormLabel>
-            <Input type={'email'} {...register('email')} />
-          </FormControl>
-          <FormControl>
-            <FormLabel>{t('profile.form.lastname')}</FormLabel>
-            <Input type={'text'} {...register('lastname')} />
-          </FormControl>
-          <FormControl>
-            <FormLabel>{t('profile.form.address')}</FormLabel>
-            <Input type={'text'} {...register('address')} />
-          </FormControl>
-          <FormControl>
-            <FormLabel>{t('profile.form.zip')}</FormLabel>
-            <Input type={'text'} {...register('zip')} />
-          </FormControl>
-        </GridItem>
-
-        <GridItem colSpan={3}>
-          <FormControl>
-            <FormLabel>{t('profile.form.firstname')}</FormLabel>
-            <Input type={'text'} {...register('firstname')} />
-          </FormControl>
-          <FormControl>
-            <FormLabel>{t('profile.form.phone')}</FormLabel>
-            <Input type={'tel'} {...register('phone')} />
-          </FormControl>
-          <FormControl>
-            <FormLabel>{t('profile.form.city')}</FormLabel>
-            <Input type={'text'} {...register('city')} />
-          </FormControl>
-          <FormControl>
-            <FormLabel>{t('profile.form.country')}</FormLabel>
-            <Input type={'text'} {...register('country')} />
-          </FormControl>
-        </GridItem>
         <GridItem colSpan={6}>
-          <Button
-            type={'submit'}
-            width={'full'}
-            mt={4}
-            colorScheme={'teal'}
-            isLoading={isLoadingUser || isPersonalInformationsLoading}
-            loadingText={'Saving'}
-            bg={'blue.400'}
-            color={'white'}
-            _hover={{
-              bg: 'blue.500',
-            }}>
-            {t('profile.form.submit')}
-          </Button>
+          <Card>
+            <CardHeader>
+              <Text fontSize={'2xl'} as={'b'}>
+                {t('profile.personal')}
+              </Text>
+            </CardHeader>
+            <CardBody>
+              <form onSubmit={handleSubmit(handleAccountUpdate)}>
+                {/** Divise in two columns */}
+                <Grid gap={6} templateColumns={'repeat(2, 2fr)'}>
+                  <GridItem>
+                    <FormControl>
+                      <FormLabel>{t('profile.form.email')}</FormLabel>
+                      <Input type={'email'} {...register('email')} />
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel>{t('profile.form.lastname')}</FormLabel>
+                      <Input type={'text'} {...register('lastname')} />
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel>{t('profile.form.address')}</FormLabel>
+                      <Input type={'text'} {...register('address')} />
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel>{t('profile.form.zip')}</FormLabel>
+                      <Input type={'text'} {...register('zip')} />
+                    </FormControl>
+                  </GridItem>
+
+                  <GridItem>
+                    <FormControl>
+                      <FormLabel>{t('profile.form.firstname')}</FormLabel>
+                      <Input type={'text'} {...register('firstname')} />
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel>{t('profile.form.phone')}</FormLabel>
+                      <Input type={'tel'} {...register('phone')} />
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel>{t('profile.form.city')}</FormLabel>
+                      <Input type={'text'} {...register('city')} />
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel>{t('profile.form.country')}</FormLabel>
+                      <Input type={'text'} {...register('country')} />
+                    </FormControl>
+                  </GridItem>
+
+                  <GridItem colSpan={2}>
+                    <Button
+                      type={'submit'}
+                      width={'full'}
+                      mt={4}
+                      colorScheme={'teal'}
+                      isLoading={isLoadingUser || isPersonalInformationsLoading}
+                      loadingText={'Saving'}
+                      bg={'blue.400'}
+                      color={'white'}
+                      _hover={{
+                        bg: 'blue.500',
+                      }}>
+                      {t('profile.form.submit')}
+                    </Button>
+                  </GridItem>
+                </Grid>
+              </form>
+            </CardBody>
+          </Card>
         </GridItem>
       </>
     );
-  }, [loading, data, handleSignOut, t, register, isLoadingUser, isPersonalInformationsLoading]);
+  }, [
+    loading,
+    data,
+    handleSignOut,
+    t,
+    handleSubmit,
+    handleAccountUpdate,
+    register,
+    isLoadingUser,
+    isPersonalInformationsLoading,
+    setValue,
+  ]);
 
   return (
-    <form onSubmit={handleSubmit(handleAccountUpdate)}>
-      <Grid gap={6} rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8} width={'4xl'}>
-        {renderBody}
-      </Grid>
-    </form>
+    <Grid gap={6} rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8} width={'4xl'}>
+      {renderBody}
+    </Grid>
   );
 };
 

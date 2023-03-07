@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { setContext } from '@apollo/client/link/context';
 import { useSignUpMutation, UsersPermissionsMe } from '@/app/generated/graphql';
 import usePersistState from '@/app/hooks/usePersistState';
@@ -38,6 +38,7 @@ const AuthContext = createContext<IAuthContext>({
 // Define our authentication provider component
 const AuthProvider: React.FC<IAuthProviderProps> = ({ children }: IAuthProviderProps) => {
   const apolloClient = useApolloClient();
+  const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
   const [signUp, { data, loading: isLoading }] = useSignUpMutation();
   const [user, setUser, setUserPersist] = usePersistState<UsersPermissionsMe | null>(PERSIST.USER, null);
   const [token, setToken, setTokenPersist] = usePersistState<string | null>(PERSIST.TOKEN, null);
@@ -63,13 +64,15 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }: IAuthProviderP
       });
 
       apolloClient.setLink(authLink.concat(apolloClient.link));
+      setAuthenticated(true);
     }
-  })
+  }, [apolloClient, token])
 
   const logout = useCallback(async () => {
     setUser(null);
     setToken(null);
     localStorage.clear();
+    setAuthenticated(false);
   }, [setToken, setUser]);
 
   const login = useCallback(
@@ -88,8 +91,6 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }: IAuthProviderP
     },
     [setTokenPersist, setUserPersist, signUp],
   );
-
-  const isAuthenticated = useMemo(() => !!user, [user]);
 
   const value = useMemo(
     () => ({

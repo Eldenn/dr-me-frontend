@@ -1150,6 +1150,15 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
+export type ChangePasswordMutationVariables = Exact<{
+  currentPassword: Scalars['String'];
+  password: Scalars['String'];
+  passwordConfirmation: Scalars['String'];
+}>;
+
+
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword?: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null } | null };
+
 export type SignUpMutationVariables = Exact<{
   input: UsersPermissionsLoginInput;
 }>;
@@ -1181,12 +1190,52 @@ export const namedOperations = {
     myPersonalInformation: 'myPersonalInformation'
   },
   Mutation: {
+    changePassword: 'changePassword',
     signUp: 'signUp',
     updateMyPersonalInformations: 'updateMyPersonalInformations',
     updateMyUser: 'updateMyUser'
   }
 }
 
+export const ChangePasswordDocument = gql`
+    mutation changePassword($currentPassword: String!, $password: String!, $passwordConfirmation: String!) {
+  changePassword(
+    currentPassword: $currentPassword
+    password: $password
+    passwordConfirmation: $passwordConfirmation
+  ) {
+    jwt
+  }
+}
+    `;
+export type ChangePasswordMutationFn = Apollo.MutationFunction<ChangePasswordMutation, ChangePasswordMutationVariables>;
+
+/**
+ * __useChangePasswordMutation__
+ *
+ * To run a mutation, you first call `useChangePasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangePasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changePasswordMutation, { data, loading, error }] = useChangePasswordMutation({
+ *   variables: {
+ *      currentPassword: // value for 'currentPassword'
+ *      password: // value for 'password'
+ *      passwordConfirmation: // value for 'passwordConfirmation'
+ *   },
+ * });
+ */
+export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, options);
+      }
+export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
+export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
+export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const SignUpDocument = gql`
     mutation signUp($input: UsersPermissionsLoginInput!) {
   login(input: $input) {
