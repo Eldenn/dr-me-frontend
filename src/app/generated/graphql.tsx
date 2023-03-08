@@ -1169,7 +1169,7 @@ export type SignUpMutation = { __typename?: 'Mutation', login: { __typename?: 'U
 export type MyPersonalInformationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyPersonalInformationQuery = { __typename?: 'Query', myPersonalInformations?: { __typename?: 'PersonalInformation', firstname?: string | null, lastname?: string | null, phone?: string | null, address?: string | null, city?: string | null, zip?: string | null, country?: string | null, profilePhoto?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', name: string, alternativeText?: string | null, width?: number | null, height?: number | null, url: string, previewUrl?: string | null } | null } | null } | null } | null };
+export type MyPersonalInformationQuery = { __typename?: 'Query', myPersonalInformations?: { __typename?: 'PersonalInformation', firstname?: string | null, lastname?: string | null, phone?: string | null, address?: string | null, city?: string | null, zip?: string | null, country?: string | null, profilePhoto?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, alternativeText?: string | null, width?: number | null, height?: number | null, url: string, previewUrl?: string | null, formats?: any | null, provider: string } | null } | null } | null } | null };
 
 export type UpdateMyPersonalInformationsMutationVariables = Exact<{
   input?: InputMaybe<PersonalInformationInput>;
@@ -1185,6 +1185,13 @@ export type UpdateMyUserMutationVariables = Exact<{
 
 export type UpdateMyUserMutation = { __typename?: 'Mutation', updateMyUser?: { __typename?: 'UsersPermissionsUser', email: string, username: string } | null };
 
+export type UploadMutationVariables = Exact<{
+  file: Scalars['Upload'];
+}>;
+
+
+export type UploadMutation = { __typename?: 'Mutation', upload: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', url: string, formats?: any | null } | null } | null } };
+
 export const namedOperations = {
   Query: {
     myPersonalInformation: 'myPersonalInformation'
@@ -1193,7 +1200,8 @@ export const namedOperations = {
     changePassword: 'changePassword',
     signUp: 'signUp',
     updateMyPersonalInformations: 'updateMyPersonalInformations',
-    updateMyUser: 'updateMyUser'
+    updateMyUser: 'updateMyUser',
+    upload: 'upload'
   }
 }
 
@@ -1286,6 +1294,7 @@ export const MyPersonalInformationDocument = gql`
     lastname
     profilePhoto {
       data {
+        id
         attributes {
           name
           alternativeText
@@ -1293,6 +1302,8 @@ export const MyPersonalInformationDocument = gql`
           height
           url
           previewUrl
+          formats
+          provider
         }
       }
     }
@@ -1416,3 +1427,42 @@ export function useUpdateMyUserMutation(baseOptions?: Apollo.MutationHookOptions
 export type UpdateMyUserMutationHookResult = ReturnType<typeof useUpdateMyUserMutation>;
 export type UpdateMyUserMutationResult = Apollo.MutationResult<UpdateMyUserMutation>;
 export type UpdateMyUserMutationOptions = Apollo.BaseMutationOptions<UpdateMyUserMutation, UpdateMyUserMutationVariables>;
+export const UploadDocument = gql`
+    mutation upload($file: Upload!) {
+  upload(file: $file) {
+    data {
+      id
+      attributes {
+        url
+        formats
+      }
+    }
+  }
+}
+    `;
+export type UploadMutationFn = Apollo.MutationFunction<UploadMutation, UploadMutationVariables>;
+
+/**
+ * __useUploadMutation__
+ *
+ * To run a mutation, you first call `useUploadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadMutation, { data, loading, error }] = useUploadMutation({
+ *   variables: {
+ *      file: // value for 'file'
+ *   },
+ * });
+ */
+export function useUploadMutation(baseOptions?: Apollo.MutationHookOptions<UploadMutation, UploadMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UploadMutation, UploadMutationVariables>(UploadDocument, options);
+      }
+export type UploadMutationHookResult = ReturnType<typeof useUploadMutation>;
+export type UploadMutationResult = Apollo.MutationResult<UploadMutation>;
+export type UploadMutationOptions = Apollo.BaseMutationOptions<UploadMutation, UploadMutationVariables>;

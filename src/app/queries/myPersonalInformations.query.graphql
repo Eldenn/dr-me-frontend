@@ -4,6 +4,7 @@ query myPersonalInformation {
 		lastname
 		profilePhoto {
 			data {
+        id
 				attributes {
 					name
 					alternativeText
@@ -11,6 +12,8 @@ query myPersonalInformation {
 					height
 					url
 					previewUrl
+          formats
+          provider
 				}
 			}
 		}

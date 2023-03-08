@@ -19,7 +19,7 @@ import {
   CardBody,
   Text,
 } from '@chakra-ui/react';
-import React, { FC, useCallback, useEffect, useMemo } from 'react';
+import React, { ChangeEvent, FC, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { AiOutlinePoweroff } from 'react-icons/ai';
@@ -29,8 +29,10 @@ import {
   useMyPersonalInformationQuery,
   useUpdateMyPersonalInformationsMutation,
   useUpdateMyUserMutation,
+  useUploadMutation,
 } from '@/app/generated/graphql';
 import { TOAST_DURATION, TOAST_POSITION, TOAST_STATUS } from '@/app/constants/toast';
+import { PROVIDERS } from '@/app/constants/files';
 
 interface IFieldsForm {
   email?: string | null;
@@ -44,14 +46,23 @@ interface IFieldsForm {
   profilePhoto?: string | null;
 }
 
+const { REACT_APP_STRAPI_HOST, REACT_APP_STRAPI_PORT } = process.env;
+
 const Account: FC = () => {
   const { register, setValue, handleSubmit } = useForm<IFieldsForm>();
   const { logout, user, setUser } = useAuth();
   const { t } = useTranslation();
   const toast = useToast();
   const { data, loading } = useMyPersonalInformationQuery();
+  const [photo, setPhoto] = React.useState<string>('');
   const [updateMyPersonalInformations, { data: dataPersonalInformations, loading: isPersonalInformationsLoading }] =
-    useUpdateMyPersonalInformationsMutation();
+    useUpdateMyPersonalInformationsMutation({
+      refetchQueries: [
+        {
+          query: MyPersonalInformationDocument,
+        },
+      ],
+    });
   const [updateMyUser, { data: dataUser, loading: isLoadingUser }] = useUpdateMyUserMutation({
     onCompleted: (comingDataUser) => {
       if (user && comingDataUser?.updateMyUser?.email) {
@@ -60,6 +71,18 @@ const Account: FC = () => {
           email: comingDataUser?.updateMyUser?.email,
         });
       }
+    },
+  });
+  const [upload] = useUploadMutation({
+    onCompleted: (comingDataPhoto) => {
+      setPhoto(comingDataPhoto?.upload?.data?.attributes?.url || '');
+      updateMyPersonalInformations({
+        variables: {
+          input: {
+            profilePhoto: comingDataPhoto?.upload?.data?.id,
+          },
+        },
+      });
     },
   });
 
@@ -97,6 +120,19 @@ const Account: FC = () => {
     }
   }, [dataPersonalInformations, dataUser, t, toast]);
 
+  useEffect(() => {
+    const { profilePhoto } = data?.myPersonalInformations || {};
+
+    if (profilePhoto?.data && profilePhoto?.data?.attributes?.url) {
+      if (profilePhoto?.data?.attributes?.provider === PROVIDERS.LOCAL) {
+        const host = `${REACT_APP_STRAPI_HOST}:${REACT_APP_STRAPI_PORT}`;
+        setPhoto(`${host}${profilePhoto?.data?.attributes?.url}`);
+      } else {
+        setPhoto(profilePhoto?.data?.attributes?.url);
+      }
+    }
+  }, [data]);
+
   const handleAccountUpdate: SubmitHandler<IFieldsForm> = useCallback(
     ({ email, ...rest }) => {
       updateMyPersonalInformations({
@@ -105,11 +141,6 @@ const Account: FC = () => {
             ...rest,
           },
         },
-        refetchQueries: [
-          {
-            query: MyPersonalInformationDocument,
-          },
-        ],
       });
 
       updateMyUser({
@@ -139,6 +170,16 @@ const Account: FC = () => {
       );
     }
 
+    const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files && event.target.files[0]) {
+        upload({
+          variables: {
+            file: event.target.files[0],
+          },
+        });
+      }
+    };
+
     return (
       <>
         <GridItem colSpan={6}>
@@ -163,26 +204,11 @@ const Account: FC = () => {
         <GridItem colSpan={6}>
           <Center>
             <label>
-              <input
-                type={'file'}
-                accept={'image/*'}
-                onChange={(e) => {
-                  if (e.target.files && e.target.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                      if (event.target?.result) {
-                        setValue('profilePhoto', event.target.result as string);
-                      }
-                    };
-                    reader.readAsDataURL(e.target.files[0]);
-                  }
-                }}
-                style={{ display: 'none' }}
-              />
+              <input type={'file'} accept={'image/*'} onChange={handleImageChange} style={{ display: 'none' }} />
               <Avatar
                 size={'2xl'}
                 name={`${data?.myPersonalInformations?.firstname} ${data?.myPersonalInformations?.lastname}`}
-                src={'https://bit.ly/sage-adebayo'}
+                src={photo}
                 _hover={{
                   cursor: 'pointer',
                 }}
@@ -269,13 +295,14 @@ const Account: FC = () => {
     loading,
     data,
     handleSignOut,
+    photo,
     t,
     handleSubmit,
     handleAccountUpdate,
     register,
     isLoadingUser,
     isPersonalInformationsLoading,
-    setValue,
+    upload,
   ]);
 
   return (
