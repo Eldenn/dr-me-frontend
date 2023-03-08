@@ -9,7 +9,6 @@ import {
   FormControl,
   FormLabel,
   Button,
-  Badge,
   IconButton,
   SkeletonCircle,
   SkeletonText,
@@ -19,7 +18,7 @@ import {
   CardBody,
   Text,
 } from '@chakra-ui/react';
-import React, { ChangeEvent, FC, useCallback, useEffect, useMemo } from 'react';
+import React, { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { AiOutlinePoweroff } from 'react-icons/ai';
@@ -54,7 +53,7 @@ const Account: FC = () => {
   const { t } = useTranslation();
   const toast = useToast();
   const { data, loading } = useMyPersonalInformationQuery();
-  const [photo, setPhoto] = React.useState<string>('');
+  const [photo, setPhoto] = useState<string>('');
   const [updateMyPersonalInformations, { data: dataPersonalInformations, loading: isPersonalInformationsLoading }] =
     useUpdateMyPersonalInformationsMutation({
       refetchQueries: [
@@ -215,9 +214,9 @@ const Account: FC = () => {
               />
             </label>
           </Center>
-          <Center mt={3}>
+          {/* <Center mt={3}>
             <Badge>{t('profile.roles.admin')}</Badge>
-          </Center>
+          </Center> */}
         </GridItem>
         <GridItem colSpan={6}>
           <Card>
