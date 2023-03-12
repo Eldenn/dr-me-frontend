@@ -15,8 +15,8 @@
 }
 
 html {
-  overflow: hidden;
   height: 100%;
+  background-color: #12365B !important;
 }
 
 a {
@@ -36,7 +36,6 @@ body {
   min-height: 100vh;
   background: none !important;
   overflow: auto;
-  height: 100%;
 }
 
 h1 {

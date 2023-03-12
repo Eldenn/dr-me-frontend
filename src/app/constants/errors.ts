@@ -12,7 +12,25 @@ export const ERRORS_GRAPHQL: ErrorCodes = {
       message: 'Invalid identifier or password',
       code: 'invalidCredentials',
     },
-  ]
+  ],
+  changePassword: [
+    {
+      message: 'Your new password must be different than your current password',
+      code: 'samePasswordThanCurrent',
+    },
+    {
+      message: 'The provided current password is invalid',
+      code: 'currentPasswordInvalid',
+    },
+    {
+      message: 'Passwords do not match',
+      code: 'passwordsDoNotMatch',
+    },
+    {
+      message: 'password must be at least 6 characters',
+      code: 'passwordTooShort',
+    }
+  ],
 };
 
 export const ERRORS_NETWORK = {

@@ -67,6 +67,17 @@
       "password_confirm": "Confirm password",
       "submit": "Update"
     },
+    "password": {
+      "title": "Change password",
+      "success": {
+        "update": "Your password has been updated."
+      },
+      "form": {
+        "password": "Password",
+        "password_confirm": "Confirm password",
+        "submit": "Update"
+      }
+    },
     "roles": {
       "admin": "Admin",
       "user": "User"
@@ -76,7 +87,11 @@
     "forbidden": "You are not allowed to access this page",
     "network": "Network error: Unable to connect to the server",
     "invalidCredentials": "Incorrect email or password",
-    "uniqueEmail": "This email is already used"
+    "uniqueEmail": "This email is already used",
+    "samePasswordThanCurrent": "The new password must be different from the current one",
+    "currentPasswordInvalid": "The current password is incorrect",
+    "passwordsDoNotMatch": "The passwords do not match",
+    "passwordTooShort": "The password must be at least 6 characters long"
   },
   "success": {
     "profile": "Your information has been updated"

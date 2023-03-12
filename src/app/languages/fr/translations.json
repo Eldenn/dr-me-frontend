@@ -67,6 +67,17 @@
       "password_confirm": "Confirmation du mot de passe",
       "submit": "Mettre à jour"
     },
+    "password": {
+      "title": "Changer mon mot de passe",
+      "success": {
+        "update": "Votre mot de passe a été mis à jour."
+      },
+      "form": {
+        "current": "Mot de passe actuel",
+        "new": "Nouveau mot de passe",
+        "confirm": "Confirmation du nouveau mot de passe"
+      }
+    },
     "roles": {
       "admin": "Admin",
       "user": "Utilisateur"
@@ -76,7 +87,11 @@
     "forbidden": "Accès refusé. Vous n’avez pas les droits nécessaires pour accéder à cette page",
     "network": "Erreur réseau : impossible de se connecter au serveur",
     "invalidCredentials": "Email ou mot de passe incorrect",
-    "uniqueEmail": "Cet email est déjà utilisé"
+    "uniqueEmail": "Cet email est déjà utilisé",
+    "samePasswordThanCurrent": "Le nouveau mot de passe doit être différent de l’ancien",
+    "currentPasswordInvalid": "Le mot de passe actuel est incorrect",
+    "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+    "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères"
   },
   "success": {
     "profile": "Vos informations ont été mises à jour"

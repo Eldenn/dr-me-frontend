@@ -25,6 +25,7 @@ import { AiOutlinePoweroff } from 'react-icons/ai';
 import { useAuth } from '@/app/providers/AuthProvider';
 import {
   MyPersonalInformationDocument,
+  useChangePasswordMutation,
   useMyPersonalInformationQuery,
   useUpdateMyPersonalInformationsMutation,
   useUpdateMyUserMutation,
@@ -45,10 +46,21 @@ interface IFieldsForm {
   profilePhoto?: string | null;
 }
 
+interface IFieldsPasswordForm {
+  currentPassword: string;
+  password: string;
+  passwordConfirmation: string;
+}
+
 const { REACT_APP_STRAPI_HOST, REACT_APP_STRAPI_PORT } = process.env;
 
 const Account: FC = () => {
   const { register, setValue, handleSubmit } = useForm<IFieldsForm>();
+  const {
+    register: registerPassword,
+    handleSubmit: handleSubmitPassword,
+    formState: { isValid: isValidPassword },
+  } = useForm<IFieldsPasswordForm>();
   const { logout, user, setUser } = useAuth();
   const { t } = useTranslation();
   const toast = useToast();
@@ -84,6 +96,7 @@ const Account: FC = () => {
       });
     },
   });
+  const [changePassword, { data: dataChangePassword, loading: isPasswordLoading }] = useChangePasswordMutation();
 
   const handleSignOut = useCallback(() => {
     logout();
@@ -120,6 +133,18 @@ const Account: FC = () => {
   }, [dataPersonalInformations, dataUser, t, toast]);
 
   useEffect(() => {
+    if (dataChangePassword?.changePassword) {
+      toast({
+        status: TOAST_STATUS.SUCCESS,
+        duration: TOAST_DURATION,
+        isClosable: true,
+        title: t('profile.password.success.update'),
+        position: TOAST_POSITION,
+      });
+    }
+  }, [dataChangePassword, t, toast]);
+
+  useEffect(() => {
     const { profilePhoto } = data?.myPersonalInformations || {};
 
     if (profilePhoto?.data && profilePhoto?.data?.attributes?.url) {
@@ -151,6 +176,15 @@ const Account: FC = () => {
       });
     },
     [updateMyPersonalInformations, updateMyUser],
+  );
+
+  const handlePasswordUpdate: SubmitHandler<IFieldsPasswordForm> = useCallback(
+    (passwordForm) => {
+      changePassword({
+        variables: passwordForm,
+      });
+    },
+    [changePassword],
   );
 
   const renderBody = useMemo(() => {
@@ -288,6 +322,63 @@ const Account: FC = () => {
             </CardBody>
           </Card>
         </GridItem>
+
+        <GridItem colSpan={6}>
+          <Card>
+            <CardHeader>
+              <Text fontSize={'2xl'} as={'b'}>
+                {t('profile.password.title')}
+              </Text>
+            </CardHeader>
+            <CardBody>
+              <form onSubmit={handleSubmitPassword(handlePasswordUpdate)}>
+                {/** Divise in two columns */}
+                <FormControl>
+                  <FormLabel>{t('profile.password.form.current')}</FormLabel>
+                  <Input
+                    type={'password'}
+                    {...registerPassword('currentPassword', {
+                      required: true,
+                    })}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>{t('profile.password.form.new')}</FormLabel>
+                  <Input
+                    type={'password'}
+                    {...registerPassword('password', {
+                      required: true,
+                    })}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>{t('profile.password.form.confirm')}</FormLabel>
+                  <Input
+                    type={'password'}
+                    {...registerPassword('passwordConfirmation', {
+                      required: true,
+                    })}
+                  />
+                </FormControl>
+
+                <Button
+                  type={'submit'}
+                  width={'full'}
+                  mt={4}
+                  colorScheme={'teal'}
+                  isLoading={isPasswordLoading}
+                  isDisabled={!isValidPassword}
+                  bg={'blue.400'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'blue.500',
+                  }}>
+                  {t('profile.form.submit')}
+                </Button>
+              </form>
+            </CardBody>
+          </Card>
+        </GridItem>
       </>
     );
   }, [
@@ -301,11 +392,16 @@ const Account: FC = () => {
     register,
     isLoadingUser,
     isPersonalInformationsLoading,
+    handleSubmitPassword,
+    handlePasswordUpdate,
+    registerPassword,
+    isPasswordLoading,
+    isValidPassword,
     upload,
   ]);
 
   return (
-    <Grid gap={6} rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8} width={'4xl'}>
+    <Grid gap={6} m={6} rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8} width={'4xl'}>
       {renderBody}
     </Grid>
   );
