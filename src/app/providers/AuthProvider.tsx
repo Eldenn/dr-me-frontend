@@ -66,7 +66,7 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }: IAuthProviderP
       apolloClient.setLink(authLink.concat(apolloClient.link));
       setAuthenticated(true);
     }
-  }, [apolloClient, token])
+  }, [apolloClient, token]);
 
   const logout = useCallback(async () => {
     setUser(null);
@@ -79,7 +79,7 @@ const AuthProvider: React.FC<IAuthProviderProps> = ({ children }: IAuthProviderP
     async (identifier: string, password: string, isPersist: boolean) => {
       setUserPersist(isPersist);
       setTokenPersist(isPersist);
-      
+
       signUp({
         variables: {
           input: {

@@ -145,7 +145,16 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']>;
 };
 
-export type GenericMorph = ExtraRole | I18NLocale | PersonalInformation | Right | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph =
+  | ExtraRole
+  | I18NLocale
+  | PersonalInformation
+  | Right
+  | UploadFile
+  | UploadFolder
+  | UsersPermissionsPermission
+  | UsersPermissionsRole
+  | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -303,98 +312,79 @@ export type Mutation = {
   upload: UploadFileEntityResponse;
 };
 
-
 export type MutationChangePasswordArgs = {
   currentPassword: Scalars['String'];
   password: Scalars['String'];
   passwordConfirmation: Scalars['String'];
 };
 
-
 export type MutationCreateExtraRoleArgs = {
   data: ExtraRoleInput;
 };
-
 
 export type MutationCreatePersonalInformationArgs = {
   data: PersonalInformationInput;
 };
 
-
 export type MutationCreateRightArgs = {
   data: RightInput;
 };
-
 
 export type MutationCreateUploadFileArgs = {
   data: UploadFileInput;
 };
 
-
 export type MutationCreateUploadFolderArgs = {
   data: UploadFolderInput;
 };
-
 
 export type MutationCreateUsersPermissionsRoleArgs = {
   data: UsersPermissionsRoleInput;
 };
 
-
 export type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
 };
-
 
 export type MutationDeleteExtraRoleArgs = {
   id: Scalars['ID'];
 };
 
-
 export type MutationDeletePersonalInformationArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MutationDeleteRightArgs = {
   id: Scalars['ID'];
 };
 
-
 export type MutationDeleteUploadFileArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MutationDeleteUploadFolderArgs = {
   id: Scalars['ID'];
 };
 
-
 export type MutationDeleteUsersPermissionsRoleArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MutationDeleteUsersPermissionsUserArgs = {
   id: Scalars['ID'];
 };
 
-
 export type MutationEmailConfirmationArgs = {
   confirmation: Scalars['String'];
 };
-
 
 export type MutationForgotPasswordArgs = {
   email: Scalars['String'];
 };
 
-
 export type MutationLoginArgs = {
   input: UsersPermissionsLoginInput;
 };
-
 
 export type MutationMultipleUploadArgs = {
   field?: InputMaybe<Scalars['String']>;
@@ -403,16 +393,13 @@ export type MutationMultipleUploadArgs = {
   refId?: InputMaybe<Scalars['ID']>;
 };
 
-
 export type MutationRegisterArgs = {
   input: UsersPermissionsRegisterInput;
 };
 
-
 export type MutationRemoveFileArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MutationResetPasswordArgs = {
   code: Scalars['String'];
@@ -420,64 +407,53 @@ export type MutationResetPasswordArgs = {
   passwordConfirmation: Scalars['String'];
 };
 
-
 export type MutationUpdateExtraRoleArgs = {
   data: ExtraRoleInput;
   id: Scalars['ID'];
 };
-
 
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID'];
   info?: InputMaybe<FileInfoInput>;
 };
 
-
 export type MutationUpdateMyPersonalInformationsArgs = {
   input?: InputMaybe<PersonalInformationInput>;
 };
 
-
 export type MutationUpdateMyUserArgs = {
   input?: InputMaybe<MyUserInput>;
 };
-
 
 export type MutationUpdatePersonalInformationArgs = {
   data: PersonalInformationInput;
   id: Scalars['ID'];
 };
 
-
 export type MutationUpdateRightArgs = {
   data: RightInput;
   id: Scalars['ID'];
 };
-
 
 export type MutationUpdateUploadFileArgs = {
   data: UploadFileInput;
   id: Scalars['ID'];
 };
 
-
 export type MutationUpdateUploadFolderArgs = {
   data: UploadFolderInput;
   id: Scalars['ID'];
 };
-
 
 export type MutationUpdateUsersPermissionsRoleArgs = {
   data: UsersPermissionsRoleInput;
   id: Scalars['ID'];
 };
 
-
 export type MutationUpdateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
   id: Scalars['ID'];
 };
-
 
 export type MutationUploadArgs = {
   field?: InputMaybe<Scalars['String']>;
@@ -570,7 +546,7 @@ export type PersonalInformationInput = {
 
 export enum PublicationState {
   Live = 'LIVE',
-  Preview = 'PREVIEW'
+  Preview = 'PREVIEW',
 }
 
 export type Query = {
@@ -595,11 +571,9 @@ export type Query = {
   usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>;
 };
 
-
 export type QueryExtraRoleArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
-
 
 export type QueryExtraRolesArgs = {
   filters?: InputMaybe<ExtraRoleFiltersInput>;
@@ -608,11 +582,9 @@ export type QueryExtraRolesArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-
 export type QueryI18NLocaleArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
-
 
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>;
@@ -620,11 +592,9 @@ export type QueryI18NLocalesArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-
 export type QueryPersonalInformationArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
-
 
 export type QueryPersonalInformationsArgs = {
   filters?: InputMaybe<PersonalInformationFiltersInput>;
@@ -632,11 +602,9 @@ export type QueryPersonalInformationsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-
 export type QueryRightArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
-
 
 export type QueryRightsArgs = {
   filters?: InputMaybe<RightFiltersInput>;
@@ -645,11 +613,9 @@ export type QueryRightsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-
 export type QueryUploadFileArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
-
 
 export type QueryUploadFilesArgs = {
   filters?: InputMaybe<UploadFileFiltersInput>;
@@ -657,11 +623,9 @@ export type QueryUploadFilesArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-
 export type QueryUploadFolderArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
-
 
 export type QueryUploadFoldersArgs = {
   filters?: InputMaybe<UploadFolderFiltersInput>;
@@ -669,11 +633,9 @@ export type QueryUploadFoldersArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-
 export type QueryUsersPermissionsRoleArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
-
 
 export type QueryUsersPermissionsRolesArgs = {
   filters?: InputMaybe<UsersPermissionsRoleFiltersInput>;
@@ -681,11 +643,9 @@ export type QueryUsersPermissionsRolesArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-
 export type QueryUsersPermissionsUserArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
-
 
 export type QueryUsersPermissionsUsersArgs = {
   filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
@@ -862,13 +822,11 @@ export type UploadFolder = {
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-
 export type UploadFolderChildrenArgs = {
   filters?: InputMaybe<UploadFolderFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
-
 
 export type UploadFolderFilesArgs = {
   filters?: InputMaybe<UploadFileFiltersInput>;
@@ -1014,13 +972,11 @@ export type UsersPermissionsRole = {
   users?: Maybe<UsersPermissionsUserRelationResponseCollection>;
 };
 
-
 export type UsersPermissionsRolePermissionsArgs = {
   filters?: InputMaybe<UsersPermissionsPermissionFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
-
 
 export type UsersPermissionsRoleUsersArgs = {
   filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
@@ -1085,7 +1041,6 @@ export type UsersPermissionsUser = {
   updatedAt?: Maybe<Scalars['DateTime']>;
   username: Scalars['String'];
 };
-
 
 export type UsersPermissionsUserExtraRolesArgs = {
   filters?: InputMaybe<ExtraRoleFiltersInput>;
@@ -1156,66 +1111,142 @@ export type ChangePasswordMutationVariables = Exact<{
   passwordConfirmation: Scalars['String'];
 }>;
 
-
-export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword?: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null } | null };
+export type ChangePasswordMutation = {
+  __typename?: 'Mutation';
+  changePassword?: { __typename?: 'UsersPermissionsLoginPayload'; jwt?: string | null } | null;
+};
 
 export type SignUpMutationVariables = Exact<{
   input: UsersPermissionsLoginInput;
 }>;
 
+export type SignUpMutation = {
+  __typename?: 'Mutation';
+  login: {
+    __typename?: 'UsersPermissionsLoginPayload';
+    jwt?: string | null;
+    user: {
+      __typename?: 'UsersPermissionsMe';
+      id: string;
+      username: string;
+      email?: string | null;
+      role?: { __typename?: 'UsersPermissionsMeRole'; id: string; name: string; description?: string | null } | null;
+    };
+  };
+};
 
-export type SignUpMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, role?: { __typename?: 'UsersPermissionsMeRole', id: string, name: string, description?: string | null } | null } } };
+export type MyPersonalInformationQueryVariables = Exact<{ [key: string]: never }>;
 
-export type MyPersonalInformationQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MyPersonalInformationQuery = { __typename?: 'Query', myPersonalInformations?: { __typename?: 'PersonalInformation', firstname?: string | null, lastname?: string | null, phone?: string | null, address?: string | null, city?: string | null, zip?: string | null, country?: string | null, profilePhoto?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', name: string, alternativeText?: string | null, width?: number | null, height?: number | null, url: string, previewUrl?: string | null, formats?: any | null, provider: string } | null } | null } | null } | null };
+export type MyPersonalInformationQuery = {
+  __typename?: 'Query';
+  myPersonalInformations?: {
+    __typename?: 'PersonalInformation';
+    firstname?: string | null;
+    lastname?: string | null;
+    phone?: string | null;
+    address?: string | null;
+    city?: string | null;
+    zip?: string | null;
+    country?: string | null;
+    profilePhoto?: {
+      __typename?: 'UploadFileEntityResponse';
+      data?: {
+        __typename?: 'UploadFileEntity';
+        id?: string | null;
+        attributes?: {
+          __typename?: 'UploadFile';
+          name: string;
+          alternativeText?: string | null;
+          width?: number | null;
+          height?: number | null;
+          url: string;
+          previewUrl?: string | null;
+          formats?: any | null;
+          provider: string;
+        } | null;
+      } | null;
+    } | null;
+  } | null;
+};
 
 export type UpdateMyPersonalInformationsMutationVariables = Exact<{
   input?: InputMaybe<PersonalInformationInput>;
 }>;
 
-
-export type UpdateMyPersonalInformationsMutation = { __typename?: 'Mutation', updateMyPersonalInformations?: { __typename?: 'PersonalInformation', firstname?: string | null, lastname?: string | null, phone?: string | null, address?: string | null, city?: string | null, zip?: string | null, country?: string | null, profilePhoto?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', name: string, alternativeText?: string | null, width?: number | null, height?: number | null, url: string, previewUrl?: string | null } | null } | null } | null } | null };
+export type UpdateMyPersonalInformationsMutation = {
+  __typename?: 'Mutation';
+  updateMyPersonalInformations?: {
+    __typename?: 'PersonalInformation';
+    firstname?: string | null;
+    lastname?: string | null;
+    phone?: string | null;
+    address?: string | null;
+    city?: string | null;
+    zip?: string | null;
+    country?: string | null;
+    profilePhoto?: {
+      __typename?: 'UploadFileEntityResponse';
+      data?: {
+        __typename?: 'UploadFileEntity';
+        attributes?: {
+          __typename?: 'UploadFile';
+          name: string;
+          alternativeText?: string | null;
+          width?: number | null;
+          height?: number | null;
+          url: string;
+          previewUrl?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  } | null;
+};
 
 export type UpdateMyUserMutationVariables = Exact<{
   input?: InputMaybe<MyUserInput>;
 }>;
 
-
-export type UpdateMyUserMutation = { __typename?: 'Mutation', updateMyUser?: { __typename?: 'UsersPermissionsUser', email: string, username: string } | null };
+export type UpdateMyUserMutation = {
+  __typename?: 'Mutation';
+  updateMyUser?: { __typename?: 'UsersPermissionsUser'; email: string; username: string } | null;
+};
 
 export type UploadMutationVariables = Exact<{
   file: Scalars['Upload'];
 }>;
 
-
-export type UploadMutation = { __typename?: 'Mutation', upload: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', id?: string | null, attributes?: { __typename?: 'UploadFile', url: string, formats?: any | null } | null } | null } };
+export type UploadMutation = {
+  __typename?: 'Mutation';
+  upload: {
+    __typename?: 'UploadFileEntityResponse';
+    data?: {
+      __typename?: 'UploadFileEntity';
+      id?: string | null;
+      attributes?: { __typename?: 'UploadFile'; url: string; formats?: any | null } | null;
+    } | null;
+  };
+};
 
 export const namedOperations = {
   Query: {
-    myPersonalInformation: 'myPersonalInformation'
+    myPersonalInformation: 'myPersonalInformation',
   },
   Mutation: {
     changePassword: 'changePassword',
     signUp: 'signUp',
     updateMyPersonalInformations: 'updateMyPersonalInformations',
     updateMyUser: 'updateMyUser',
-    upload: 'upload'
-  }
-}
+    upload: 'upload',
+  },
+};
 
 export const ChangePasswordDocument = gql`
-    mutation changePassword($currentPassword: String!, $password: String!, $passwordConfirmation: String!) {
-  changePassword(
-    currentPassword: $currentPassword
-    password: $password
-    passwordConfirmation: $passwordConfirmation
-  ) {
-    jwt
+  mutation changePassword($currentPassword: String!, $password: String!, $passwordConfirmation: String!) {
+    changePassword(currentPassword: $currentPassword, password: $password, passwordConfirmation: $passwordConfirmation) {
+      jwt
+    }
   }
-}
-    `;
+`;
 export type ChangePasswordMutationFn = Apollo.MutationFunction<ChangePasswordMutation, ChangePasswordMutationVariables>;
 
 /**
@@ -1237,30 +1268,32 @@ export type ChangePasswordMutationFn = Apollo.MutationFunction<ChangePasswordMut
  *   },
  * });
  */
-export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, options);
-      }
+export function useChangePasswordMutation(
+  baseOptions?: Apollo.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, options);
+}
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const SignUpDocument = gql`
-    mutation signUp($input: UsersPermissionsLoginInput!) {
-  login(input: $input) {
-    user {
-      id
-      username
-      email
-      role {
+  mutation signUp($input: UsersPermissionsLoginInput!) {
+    login(input: $input) {
+      user {
         id
-        name
-        description
+        username
+        email
+        role {
+          id
+          name
+          description
+        }
       }
+      jwt
     }
-    jwt
   }
-}
-    `;
+`;
 export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMutationVariables>;
 
 /**
@@ -1281,40 +1314,40 @@ export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMut
  * });
  */
 export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignUpMutation, SignUpMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, options);
+}
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
 export const MyPersonalInformationDocument = gql`
-    query myPersonalInformation {
-  myPersonalInformations {
-    firstname
-    lastname
-    profilePhoto {
-      data {
-        id
-        attributes {
-          name
-          alternativeText
-          width
-          height
-          url
-          previewUrl
-          formats
-          provider
+  query myPersonalInformation {
+    myPersonalInformations {
+      firstname
+      lastname
+      profilePhoto {
+        data {
+          id
+          attributes {
+            name
+            alternativeText
+            width
+            height
+            url
+            previewUrl
+            formats
+            provider
+          }
         }
       }
+      phone
+      address
+      city
+      zip
+      country
     }
-    phone
-    address
-    city
-    zip
-    country
   }
-}
-    `;
+`;
 
 /**
  * __useMyPersonalInformationQuery__
@@ -1331,43 +1364,56 @@ export const MyPersonalInformationDocument = gql`
  *   },
  * });
  */
-export function useMyPersonalInformationQuery(baseOptions?: Apollo.QueryHookOptions<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>(MyPersonalInformationDocument, options);
-      }
-export function useMyPersonalInformationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>(MyPersonalInformationDocument, options);
-        }
+export function useMyPersonalInformationQuery(
+  baseOptions?: Apollo.QueryHookOptions<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>(MyPersonalInformationDocument, options);
+}
+export function useMyPersonalInformationLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>(
+    MyPersonalInformationDocument,
+    options,
+  );
+}
 export type MyPersonalInformationQueryHookResult = ReturnType<typeof useMyPersonalInformationQuery>;
 export type MyPersonalInformationLazyQueryHookResult = ReturnType<typeof useMyPersonalInformationLazyQuery>;
-export type MyPersonalInformationQueryResult = Apollo.QueryResult<MyPersonalInformationQuery, MyPersonalInformationQueryVariables>;
+export type MyPersonalInformationQueryResult = Apollo.QueryResult<
+  MyPersonalInformationQuery,
+  MyPersonalInformationQueryVariables
+>;
 export const UpdateMyPersonalInformationsDocument = gql`
-    mutation updateMyPersonalInformations($input: PersonalInformationInput) {
-  updateMyPersonalInformations(input: $input) {
-    firstname
-    lastname
-    profilePhoto {
-      data {
-        attributes {
-          name
-          alternativeText
-          width
-          height
-          url
-          previewUrl
+  mutation updateMyPersonalInformations($input: PersonalInformationInput) {
+    updateMyPersonalInformations(input: $input) {
+      firstname
+      lastname
+      profilePhoto {
+        data {
+          attributes {
+            name
+            alternativeText
+            width
+            height
+            url
+            previewUrl
+          }
         }
       }
+      phone
+      address
+      city
+      zip
+      country
     }
-    phone
-    address
-    city
-    zip
-    country
   }
-}
-    `;
-export type UpdateMyPersonalInformationsMutationFn = Apollo.MutationFunction<UpdateMyPersonalInformationsMutation, UpdateMyPersonalInformationsMutationVariables>;
+`;
+export type UpdateMyPersonalInformationsMutationFn = Apollo.MutationFunction<
+  UpdateMyPersonalInformationsMutation,
+  UpdateMyPersonalInformationsMutationVariables
+>;
 
 /**
  * __useUpdateMyPersonalInformationsMutation__
@@ -1386,21 +1432,29 @@ export type UpdateMyPersonalInformationsMutationFn = Apollo.MutationFunction<Upd
  *   },
  * });
  */
-export function useUpdateMyPersonalInformationsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMyPersonalInformationsMutation, UpdateMyPersonalInformationsMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateMyPersonalInformationsMutation, UpdateMyPersonalInformationsMutationVariables>(UpdateMyPersonalInformationsDocument, options);
-      }
+export function useUpdateMyPersonalInformationsMutation(
+  baseOptions?: Apollo.MutationHookOptions<UpdateMyPersonalInformationsMutation, UpdateMyPersonalInformationsMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateMyPersonalInformationsMutation, UpdateMyPersonalInformationsMutationVariables>(
+    UpdateMyPersonalInformationsDocument,
+    options,
+  );
+}
 export type UpdateMyPersonalInformationsMutationHookResult = ReturnType<typeof useUpdateMyPersonalInformationsMutation>;
 export type UpdateMyPersonalInformationsMutationResult = Apollo.MutationResult<UpdateMyPersonalInformationsMutation>;
-export type UpdateMyPersonalInformationsMutationOptions = Apollo.BaseMutationOptions<UpdateMyPersonalInformationsMutation, UpdateMyPersonalInformationsMutationVariables>;
+export type UpdateMyPersonalInformationsMutationOptions = Apollo.BaseMutationOptions<
+  UpdateMyPersonalInformationsMutation,
+  UpdateMyPersonalInformationsMutationVariables
+>;
 export const UpdateMyUserDocument = gql`
-    mutation updateMyUser($input: MyUserInput) {
-  updateMyUser(input: $input) {
-    email
-    username
+  mutation updateMyUser($input: MyUserInput) {
+    updateMyUser(input: $input) {
+      email
+      username
+    }
   }
-}
-    `;
+`;
 export type UpdateMyUserMutationFn = Apollo.MutationFunction<UpdateMyUserMutation, UpdateMyUserMutationVariables>;
 
 /**
@@ -1420,26 +1474,28 @@ export type UpdateMyUserMutationFn = Apollo.MutationFunction<UpdateMyUserMutatio
  *   },
  * });
  */
-export function useUpdateMyUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMyUserMutation, UpdateMyUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateMyUserMutation, UpdateMyUserMutationVariables>(UpdateMyUserDocument, options);
-      }
+export function useUpdateMyUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<UpdateMyUserMutation, UpdateMyUserMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateMyUserMutation, UpdateMyUserMutationVariables>(UpdateMyUserDocument, options);
+}
 export type UpdateMyUserMutationHookResult = ReturnType<typeof useUpdateMyUserMutation>;
 export type UpdateMyUserMutationResult = Apollo.MutationResult<UpdateMyUserMutation>;
 export type UpdateMyUserMutationOptions = Apollo.BaseMutationOptions<UpdateMyUserMutation, UpdateMyUserMutationVariables>;
 export const UploadDocument = gql`
-    mutation upload($file: Upload!) {
-  upload(file: $file) {
-    data {
-      id
-      attributes {
-        url
-        formats
+  mutation upload($file: Upload!) {
+    upload(file: $file) {
+      data {
+        id
+        attributes {
+          url
+          formats
+        }
       }
     }
   }
-}
-    `;
+`;
 export type UploadMutationFn = Apollo.MutationFunction<UploadMutation, UploadMutationVariables>;
 
 /**
@@ -1460,9 +1516,9 @@ export type UploadMutationFn = Apollo.MutationFunction<UploadMutation, UploadMut
  * });
  */
 export function useUploadMutation(baseOptions?: Apollo.MutationHookOptions<UploadMutation, UploadMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UploadMutation, UploadMutationVariables>(UploadDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UploadMutation, UploadMutationVariables>(UploadDocument, options);
+}
 export type UploadMutationHookResult = ReturnType<typeof useUploadMutation>;
 export type UploadMutationResult = Apollo.MutationResult<UploadMutation>;
 export type UploadMutationOptions = Apollo.BaseMutationOptions<UploadMutation, UploadMutationVariables>;

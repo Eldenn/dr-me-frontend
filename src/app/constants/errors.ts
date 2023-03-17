@@ -29,13 +29,13 @@ export const ERRORS_GRAPHQL: ErrorCodes = {
     {
       message: 'password must be at least 6 characters',
       code: 'passwordTooShort',
-    }
+    },
   ],
 };
 
 export const ERRORS_NETWORK = {
   401: 'Response not successful: Received status code 401',
-}
+};
 
 export const ERROR_CODES = {
   FORBIDDEN: 'FORBIDDEN',

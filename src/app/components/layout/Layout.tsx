@@ -17,7 +17,7 @@ const Layout: FC<ILayoutProps> = ({ children }: ILayoutProps) => (
     justify={'center'}
     style={{
       position: 'relative',
-      background: 'none'
+      background: 'none',
     }}>
     <Background />
     {children}

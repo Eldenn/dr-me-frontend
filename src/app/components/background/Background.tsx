@@ -3,7 +3,6 @@ import React, { FC } from 'react';
 import '@/app/components/background/Background.scss';
 
 const Background: FC = () => {
-
   return (
     <svg
       className={'background'}
@@ -15,7 +14,7 @@ const Background: FC = () => {
       y={'0px'}
       viewBox={'0 0 1300 550'}
       xmlSpace={'preserve'}
-      preserveAspectRatio={"none"}>
+      preserveAspectRatio={'none'}>
       <path className={'st1'} d={'M 0 250 C 600 450 650 100 1300 250 L 1300 550 L 0 550 L 0 250'}>
         <animate
           attributeName={'d'}

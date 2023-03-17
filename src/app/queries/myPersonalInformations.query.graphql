@@ -1,26 +1,26 @@
 query myPersonalInformation {
   myPersonalInformations {
-		firstname
-		lastname
-		profilePhoto {
-			data {
+    firstname
+    lastname
+    profilePhoto {
+      data {
         id
-				attributes {
-					name
-					alternativeText
-					width
-					height
-					url
-					previewUrl
+        attributes {
+          name
+          alternativeText
+          width
+          height
+          url
+          previewUrl
           formats
           provider
-				}
-			}
-		}
-		phone
-		address
-		city
-		zip
-		country
-	}
+        }
+      }
+    }
+    phone
+    address
+    city
+    zip
+    country
+  }
 }

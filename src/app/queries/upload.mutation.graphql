@@ -1,11 +1,11 @@
 mutation upload($file: Upload!) {
   upload(file: $file) {
-		data {
-			id
-			attributes {
-				url
-				formats
-			}
-		}
-	}
+    data {
+      id
+      attributes {
+        url
+        formats
+      }
+    }
+  }
 }

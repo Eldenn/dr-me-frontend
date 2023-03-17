@@ -42,6 +42,6 @@ const Router: FC = () => {
       </Suspense>
     </BrowserRouter>
   );
-}
+};
 
 export default Router;

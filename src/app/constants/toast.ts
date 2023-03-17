@@ -1,5 +1,5 @@
-import { ToastStatusConstant } from "@/app/types/toast";
-import { ToastPosition } from "@chakra-ui/react";
+import { ToastStatusConstant } from '@/app/types/toast';
+import { ToastPosition } from '@chakra-ui/react';
 
 export const TOAST_DURATION = 3000;
 export const TOAST_IS_CLOSABLE = true;

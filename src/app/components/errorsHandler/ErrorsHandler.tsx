@@ -18,68 +18,70 @@ const ErrorsHandler: FC<IProps> = ({ children }: IProps) => {
   const toast = useToast();
   const [errorLink, setErrorLink] = React.useState<ApolloLink | null>(null);
 
-  const setLink: ErrorHandler = useCallback(({ graphQLErrors, networkError, operation: { operationName } }) => {
-    const toastOptions = {
-      status: TOAST_STATUS.ERROR,
-      duration: TOAST_DURATION,
-      position: TOAST_POSITION,
-      isClosable: true,
-    };
+  const setLink: ErrorHandler = useCallback(
+    ({ graphQLErrors, networkError, operation: { operationName } }) => {
+      const toastOptions = {
+        status: TOAST_STATUS.ERROR,
+        duration: TOAST_DURATION,
+        position: TOAST_POSITION,
+        isClosable: true,
+      };
 
-    if (graphQLErrors) {
-      graphQLErrors.forEach(({ message, extensions }) => {
-        if (ERRORS_GRAPHQL[operationName]) {
-          const error = ERRORS_GRAPHQL[operationName].find((errorElement) => errorElement.message === message);
+      if (graphQLErrors) {
+        graphQLErrors.forEach(({ message, extensions }) => {
+          if (ERRORS_GRAPHQL[operationName]) {
+            const error = ERRORS_GRAPHQL[operationName].find((errorElement) => errorElement.message === message);
 
-          if (error) {
+            if (error) {
+              toast({
+                ...toastOptions,
+                title: t(`error.${error.code}`),
+                position: TOAST_POSITION,
+              });
+              return;
+            }
+          }
+
+          if (extensions?.code === ERROR_CODES.FORBIDDEN) {
             toast({
               ...toastOptions,
-              title: t(`error.${error.code}`),
-              position: TOAST_POSITION,
+              title: t('error.forbidden'),
             });
+
+            logout();
             return;
           }
-        }
+        });
+      }
 
-        if (extensions?.code === ERROR_CODES.FORBIDDEN) {
+      if (networkError) {
+        if (networkError.message === ERRORS_NETWORK['401']) {
           toast({
             ...toastOptions,
             title: t('error.forbidden'),
           });
 
           logout();
-          return;
+        } else {
+          toast({
+            ...toastOptions,
+            title: t('error.network'),
+          });
         }
-      });
-    }
-
-    if (networkError) {
-      if (networkError.message === ERRORS_NETWORK['401']) {
-        toast({
-          ...toastOptions,
-          title: t('error.forbidden'),
-        });
-
-        logout();
-      } else {
-        toast({
-          ...toastOptions,
-          title: t('error.network'),
-        });
       }
-    }
-  }, [logout, t, toast]);
+    },
+    [logout, t, toast],
+  );
 
   useEffect(() => {
-    setErrorLink(onError(setLink))
-  }, [setLink])
+    setErrorLink(onError(setLink));
+  }, [setLink]);
 
   useEffect(() => {
     if (errorLink) {
       apolloClient.setLink(errorLink.concat(apolloClient.link));
-      setErrorLink(null)
+      setErrorLink(null);
     }
-
   }, [apolloClient, errorLink, setLink]);
 
   return <>{children}</>;
