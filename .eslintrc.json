@@ -7,7 +7,9 @@
     "src/**/*.old/*",
     "schemagen.js",
     "codegen.js",
-    "src/**/**/graphql.tsx"
+    "src/**/**/graphql.tsx",
+    "stats.html",
+    "dist/"
   ],
   "extends": [
     "airbnb-typescript",
