@@ -1,0 +1,12 @@
+# Source files
+/src
+tsconfig.json
+vite.config.ts
+
+# Test files
+/tests
+
+# Build files
+/out
+/dist
+/*.tsbuildinfo
